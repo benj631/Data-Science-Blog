@@ -1,0 +1,434 @@
+@font-face {
+    font-family: "Metropolis";
+    src: url("assets/fonts/Metropolis-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Metropolis";
+    src: url("assets/fonts/Metropolis-SemiBold.woff2") format("woff2");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Metropolis";
+    src: url("assets/fonts/Metropolis-RegularItalic.woff2") format("woff2");
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Metropolis";
+    src: url("assets/fonts/Metropolis-SemiBoldItalic.woff2") format("woff2");
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Metropolis";
+    src: url("assets/fonts/Metropolis-Light.woff2") format("woff2");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Metropolis";
+    src: url("assets/fonts/Metropolis-LightItalic.woff2") format("woff2");
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+.light-text {
+    font-weight: 300;
+}
+
+/* Apply Metropolis as the Default Font */
+body {
+    font-family: "Metropolis", sans-serif;
+}
+
+
+/* Light Mode */
+
+.light-mode {
+    --bg-color: #FFFFFF;
+    --bg-color-alt1: #f0f0f0;
+    --text-color: #000000;
+    
+    --link-color: #3d4141;
+    --link-hover: #0D122B;
+
+    --theme-toggle-bg-color: #ffffff;
+    --theme-toggle-shadow: rgba(0, 0, 0, 0.5);
+    --theme-toggle-hover: #DDDDDD;
+
+    --separator-color: rgba(0, 0, 0, .3); /* Light mode separator */
+    --visited-link-color: #0D122B;
+    
+    --current: #000000
+    --button-color: #888888;
+    
+    --highlighted-text: #ffcf33;
+}
+
+/* Dark Mode */
+
+.dark-mode {
+    --bg-color: rgb(19, 20, 24);
+    --bg-color-alt1: #39393f;
+    --text-color: #EAEAEA;
+    
+    --link-color: #b6b6b6;
+    --link-hover: #FFFFFF;
+
+    --theme-toggle-bg-color: #000000;
+    --theme-toggle-shadow: rgba(255, 255, 255, 0.3);
+    --theme-toggle-hover: #888888;
+
+    --separator-color: rgba(255, 255, 255, .3); /* Dark mode separator */
+    --visited-link-color: #EAEAEA;
+    
+    --current: #F2F2F2
+        
+    --button-color: #FFFFFF;
+    
+    --highlighted-text: #2c8ba8;
+}
+
+/* Adjust Default Link Styling */
+
+a {
+    text-decoration: none; /* Removes underline */
+    position: relative; /* Needed for the pseudo-element */
+    color: var(--link-color); /* Use your theme variable */
+}
+
+a::after {
+    content: "";
+    position: absolute;
+    bottom: -1px; /* Position the line at the bottom of the text */
+    left: 0;
+    width: 0%; /* Start with no width */
+    height: 1px; /* Line thickness */
+    background-color: var(--link-color); /* Choose underline color */
+    transition: width 0.2s ease-in-out; /* Animate width */
+}
+
+a:hover::after {
+    width: 100%; /* Expand the underline */
+}
+
+a:visited {
+    color: var(--visited-link-color); /* Custom visited link color */
+}
+
+a:hover {
+    color: var(--link-hover); /* Change color on hover */
+    text-decoration: none; /* Optional: add underline on hover */
+    transition: 0.4;
+}
+
+::selection {
+    background-color: var(--highlighted-text); /* Change the background color of selected text */
+}
+
+
+/* General Body Styling */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition:
+        background 0.4s,
+        color 0.4s;
+}
+
+/* Default width settings */
+
+nav, main {
+    width: 100%;
+}
+
+
+
+@media (min-width: 1024px) { /* For larger screens */
+    nav {
+        max-width: 0vw;
+    }
+
+    main {
+        max-width: 35vw;
+    }
+
+    nav, main {
+        margin: 0 auto; /* Center them */
+    }
+}
+
+@media (max-width: 800px) {
+    header, main {
+        padding: 20px; /* Adjust padding for mobile view */
+        box-sizing: border-box; /* Includes padding in total height. */
+    }
+}
+
+nav {
+    position: relative;
+    display: flex;
+    justify-content: center; /* Center nav contents */
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom:20px
+}
+
+.nav-links-div {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    
+    font-size: 120%;
+}
+
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: var(--link-color);
+}
+
+nav a#current {
+    color: var(--current);
+    font-weight: bold;
+}
+
+#sun-icon {
+    display: none; /* Initially hidden */
+    width: 24px;
+    height: 24px;
+    background-image: url('assets/svg/sun.svg');
+    background-size: cover;
+}
+
+#moon-icon {
+    width: 24px;
+    height: 24px;
+    background-image: url('assets/svg/moon.svg');
+    background-size: cover;
+}
+
+#theme-toggle {
+    position: fixed;
+    right: .5em;
+    top: .5em;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    background: var(--theme-toggle-bg-color);
+    color: white;
+    border-radius: 40px;
+    font-size: 16px;
+    box-shadow: 0 2px 3px var(--theme-toggle-hover);
+}
+
+#theme-toggle:hover {
+    transition: all 0.4s ease-in-out; /* Slower, smoother transition */
+    background: var(--theme-toggle-hover);
+}
+
+.nav-line {
+    position: absolute;
+    bottom: 0;  /* Aligns to bottom of nav */
+    width: 35vw;  /* Full viewport width */
+    height: 1px;  /* Thin separator */
+    background-color: var(--separator-color);  /* Use theme color */
+}
+
+
+/* Layout */
+header {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.header-spacer {
+    height: 3.4em
+}
+
+#prof-pic {
+    max-width: 200px;
+}
+
+img#profile-pic {
+    width: 10em;  /* Set desired width */
+    height: 10em; /* Set desired height */
+    /* object-fit: cover; */ /* Ensures proper scaling */
+    /* clip-path: inset(10% 10% 10% 10%); */ /* Crops edges */
+    border-radius: 50%; /* Fully round */
+    
+}
+
+header h1 {
+    font-size: 2.2em;
+    padding-top: 2em;
+    padding-bottom: 1em;
+}
+
+header h2.index {
+    font-size: 1.8em;
+}
+
+main {
+    display: flex;
+    flex: 1; /* Stretch top to bottom */
+    flex-direction: column; /* Stack the content vertically */
+    justify-content: flex-start; /* Align content to the top */
+    align-items: flex-start; /* Align content to the left */
+    padding: 20px; /* Add padding around the content */
+    width: 100%; /* Ensure it spans the full width of its parent */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+main h2 {
+    font-size: 1.4em;
+}
+
+main h3 {
+    font-size: 1.2em;
+}
+
+main h4 {
+    font-size: 1em;
+}
+
+/* Post Styling */
+
+.post {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.post-title a:visited{
+    color: var(--link-color);
+}
+
+.post-title a:visited:hover{
+color: var(--link-hover); /* Change color on hover */
+    text-decoration: none; /* Optional: add underline on hover */
+    transition: 0.4;
+}
+
+.post-separator {
+    display: block; 
+    height: 1px;
+    width: 100%;
+    background: var(--separator-color); /* Use your theme color */
+    border: none; /* Removes default border */
+    margin: 10px 0;
+}
+
+.post .post-title {
+    
+}
+
+.post .post-date {
+    
+}
+
+/* Table of Contents */
+
+/* Button */
+#toggle-toc {
+    background-color: var(--button-color); /* Set default button color */
+    color: var(--button-text-color); /* Set text color */
+    border: none;
+    padding: 10px 15px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px var(--theme-toggle-shadow);
+    margin-bottom: 5px;
+}
+
+#toggle-toc:hover {
+    background-color: var(--button-color); /* Darken button on hover */
+    transform: scale(1.05); /* Slightly increase size for hover effect */
+}
+
+#toggle-toc:focus {
+    outline: none;
+    box-shadow: 0 0 5px 2px var(--theme-toggle-shadow); /* Focus outline for accessibility */
+}
+
+.toc-open::before {
+    content: '▼ '; 
+    font-size: .9em;
+}
+
+.toc-closed::before {
+    content: '▶ ';
+    font-size: .8em;
+    padding-left: .3em;
+}
+
+#table-of-contents {
+    width: 100%;
+    margin: 20px 0;
+    display: none;
+    background-color: var(--bg-color-alt1);
+    border-radius: .8em;
+}
+
+#table-of-contents ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#table-of-contents li {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#table-of-contents a::before {
+    content: "• ";
+}
+
+#table-of-contents a {
+    text-decoration: none;
+    color: var(--link-color);
+    margin: 20px;
+}
+
+#table-of-contents a:hover {
+    text-decoration: none;
+    color: var(--link-hover)
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+#jump-to-top-button {
+    position: fixed;
+    /* Later */
+}

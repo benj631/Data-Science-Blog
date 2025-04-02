@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   width="800px"
+   height="800px"
+   viewBox="0 0 24 24"
+   fill="none"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="sun.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     id="namedview8"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     showguides="false"
+     inkscape:zoom="1.07625"
+     inkscape:cx="321.02207"
+     inkscape:cy="378.6295"
+     inkscape:window-width="1920"
+     inkscape:window-height="1057"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg8">
+    <inkscape:grid
+       id="grid8"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="0.03"
+       spacingy="0.03"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       dotted="false"
+       gridanglex="30"
+       gridanglez="30"
+       visible="false" />
+    <sodipodi:guide
+       position="0,24"
+       orientation="-0.70710678,-0.70710678"
+       id="guide8"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="0,5.364418e-07"
+       orientation="0.70710678,-0.70710678"
+       id="guide9"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="2.3999999,21.6"
+       orientation="0,-1"
+       id="guide10"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="2.3999999,21.6"
+       orientation="1,0"
+       id="guide11"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="21.599999,21.6"
+       orientation="1,0"
+       id="guide12"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="2.3999999,2.4000005"
+       orientation="0,-1"
+       id="guide13"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="4.4999999,12"
+       orientation="1,0"
+       id="guide14"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="19.5,12"
+       orientation="1,0"
+       id="guide15"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <circle
+     cx="12"
+     cy="12"
+     stroke="#1c274c"
+     stroke-width="1.5"
+     id="circle1"
+     r="7.2000003"
+     style="fill:none;stroke:#ffffff;stroke-opacity:1;fill-opacity:0" />
+  <path
+     d="M 12,0.74999998 V 2.75"
+     stroke="#1c274c"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path1"
+     style="stroke:#ffffff;stroke-opacity:1" />
+  <path
+     d="m 12,21.249999 v 2"
+     stroke="#1c274c"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path2"
+     style="stroke:#ffffff;stroke-opacity:1" />
+  <path
+     d="M 2.75,12 H 0.74999998"
+     stroke="#1c274c"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path3"
+     style="stroke:#ffffff;stroke-opacity:1" />
+  <path
+     d="m 23.249999,12 h -2"
+     stroke="#1c274c"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path4"
+     style="stroke:#ffffff;stroke-opacity:1" />
+  <path
+     d="m 20.85,3.1499999 -1.5,1.4999996"
+     stroke="#1c274c"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path5"
+     sodipodi:nodetypes="cc"
+     style="stroke:#ffffff;stroke-opacity:1" />
+  <path
+     d="m 3.1499999,3.1499999 1.5,1.5"
+     stroke="#1c274c"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path6"
+     sodipodi:nodetypes="cc"
+     style="stroke:#ffffff;stroke-opacity:1" />
+  <path
+     d="m 4.6499999,19.35 -1.5,1.5"
+     stroke="#1c274c"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path7"
+     sodipodi:nodetypes="cc"
+     style="stroke:#ffffff;stroke-opacity:1" />
+  <path
+     d="m 20.85,20.85 -1.5,-1.5"
+     stroke="#1c274c"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     id="path8"
+     sodipodi:nodetypes="cc"
+     style="stroke:#ffffff;stroke-opacity:1" />
+</svg>
