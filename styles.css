@@ -55,27 +55,29 @@ body {
     font-family: "Metropolis", sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
 
 /* Light Mode */
 
 .light-mode {
-    --bg-color: #FFFFFF;
+    --bg-color: #ffffff;
     --bg-color-alt1: #f0f0f0;
     --text-color: #000000;
-    
+
     --link-color: #3d4141;
-    --link-hover: #0D122B;
+    --link-hover: #0d122b;
 
     --theme-toggle-bg-color: #ffffff;
     --theme-toggle-shadow: rgba(0, 0, 0, 0.5);
-    --theme-toggle-hover: #DDDDDD;
+    --theme-toggle-hover: #dddddd;
 
-    --separator-color: rgba(0, 0, 0, .3); /* Light mode separator */
-    --visited-link-color: #0D122B;
-    
-    --current: #000000
-    --button-color: #888888;
-    
+    --separator-color: rgba(0, 0, 0, 0.3); /* Light mode separator */
+    --visited-link-color: #0d122b;
+
+    --current: #000000 --button-color: #888888;
+
     --highlighted-text: #ffcf33;
 }
 
@@ -84,22 +86,20 @@ body {
 .dark-mode {
     --bg-color: rgb(19, 20, 24);
     --bg-color-alt1: #39393f;
-    --text-color: #EAEAEA;
-    
+    --text-color: #eaeaea;
+
     --link-color: #b6b6b6;
-    --link-hover: #FFFFFF;
+    --link-hover: #ffffff;
 
     --theme-toggle-bg-color: #000000;
     --theme-toggle-shadow: rgba(255, 255, 255, 0.3);
     --theme-toggle-hover: #888888;
 
-    --separator-color: rgba(255, 255, 255, .3); /* Dark mode separator */
-    --visited-link-color: #EAEAEA;
-    
-    --current: #F2F2F2
-        
-    --button-color: #FFFFFF;
-    
+    --separator-color: rgba(255, 255, 255, 0.3); /* Dark mode separator */
+    --visited-link-color: #eaeaea;
+
+    --current: #f2f2f2 --button-color: #ffffff;
+
     --highlighted-text: #2c8ba8;
 }
 
@@ -140,10 +140,10 @@ a:hover {
     background-color: var(--highlighted-text); /* Change the background color of selected text */
 }
 
-
 /* General Body Styling */
 
-html, body {
+html,
+body {
     height: 100%;
     margin: 0;
     display: flex;
@@ -160,30 +160,47 @@ body {
 
 /* Default width settings */
 
-nav, main {
+nav,
+main {
     width: 100%;
 }
 
+@media (min-width: 1024px) {
+    /* For larger screens */
 
+    body {
+        font-size: 1.2em;
+    }
 
-@media (min-width: 1024px) { /* For larger screens */
     nav {
         max-width: 0vw;
     }
 
     main {
-        max-width: 35vw;
+        max-width: 40vw;
     }
 
-    nav, main {
+    nav,
+    main {
         margin: 0 auto; /* Center them */
     }
 }
 
 @media (max-width: 800px) {
-    header, main {
+    /* For smaller screens */
+
+    body {
+        font-size: 1em; /* Don't mess with this */
+    }
+
+    header,
+    main {
         padding: 20px; /* Adjust padding for mobile view */
         box-sizing: border-box; /* Includes padding in total height. */
+    }
+
+    html body #jump-to-top-button {
+        padding: 1em 1em;
     }
 }
 
@@ -193,7 +210,7 @@ nav {
     justify-content: center; /* Center nav contents */
     align-items: center;
     padding-top: 20px;
-    padding-bottom:20px
+    padding-bottom: 20px;
 }
 
 .nav-links-div {
@@ -201,7 +218,7 @@ nav {
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    
+
     font-size: 120%;
 }
 
@@ -220,21 +237,21 @@ nav a#current {
     display: none; /* Initially hidden */
     width: 24px;
     height: 24px;
-    background-image: url('assets/svg/sun.svg');
+    background-image: url("assets/svg/sun.svg");
     background-size: cover;
 }
 
 #moon-icon {
     width: 24px;
     height: 24px;
-    background-image: url('assets/svg/moon.svg');
+    background-image: url("assets/svg/moon.svg");
     background-size: cover;
 }
 
 #theme-toggle {
     position: fixed;
-    right: .5em;
-    top: .5em;
+    right: 0.5em;
+    top: 0.5em;
     padding: 10px;
     border: none;
     cursor: pointer;
@@ -252,12 +269,11 @@ nav a#current {
 
 .nav-line {
     position: absolute;
-    bottom: 0;  /* Aligns to bottom of nav */
-    width: 35vw;  /* Full viewport width */
-    height: 1px;  /* Thin separator */
-    background-color: var(--separator-color);  /* Use theme color */
+    bottom: 0; /* Aligns to bottom of nav */
+    width: 35vw; /* Full viewport width */
+    height: 1px; /* Thin separator */
+    background-color: var(--separator-color); /* Use theme color */
 }
-
 
 /* Layout */
 header {
@@ -266,7 +282,7 @@ header {
 }
 
 .header-spacer {
-    height: 3.4em
+    height: 3.4em;
 }
 
 #prof-pic {
@@ -274,16 +290,19 @@ header {
 }
 
 img#profile-pic {
-    width: 10em;  /* Set desired width */
+    width: 10em; /* Set desired width */
     height: 10em; /* Set desired height */
     /* object-fit: cover; */ /* Ensures proper scaling */
     /* clip-path: inset(10% 10% 10% 10%); */ /* Crops edges */
     border-radius: 50%; /* Fully round */
-    
+}
+
+#article_title {
+    padding-bottom: 0.5em;
 }
 
 header h1 {
-    font-size: 2.2em;
+    font-size: 2.4em;
     padding-top: 2em;
     padding-bottom: 1em;
 }
@@ -303,18 +322,6 @@ main {
     box-sizing: border-box; /* Include padding in width calculation */
 }
 
-main h2 {
-    font-size: 1.4em;
-}
-
-main h3 {
-    font-size: 1.2em;
-}
-
-main h4 {
-    font-size: 1em;
-}
-
 /* Post Styling */
 
 .post {
@@ -324,18 +331,18 @@ main h4 {
     width: 100%;
 }
 
-.post-title a:visited{
+.post-title a:visited {
     color: var(--link-color);
 }
 
-.post-title a:visited:hover{
-color: var(--link-hover); /* Change color on hover */
+.post-title a:visited:hover {
+    color: var(--link-hover); /* Change color on hover */
     text-decoration: none; /* Optional: add underline on hover */
     transition: 0.4;
 }
 
 .post-separator {
-    display: block; 
+    display: block;
     height: 1px;
     width: 100%;
     background: var(--separator-color); /* Use your theme color */
@@ -344,11 +351,9 @@ color: var(--link-hover); /* Change color on hover */
 }
 
 .post .post-title {
-    
 }
 
 .post .post-date {
-    
 }
 
 /* Table of Contents */
@@ -362,8 +367,11 @@ color: var(--link-hover); /* Change color on hover */
     font-size: 1em;
     cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition:
+        background-color 0.3s ease,
+        transform 0.2s ease;
     box-shadow: 0 2px 5px var(--theme-toggle-shadow);
+    margin-top: .4em;
     margin-bottom: 5px;
 }
 
@@ -378,32 +386,57 @@ color: var(--link-hover); /* Change color on hover */
 }
 
 .toc-open::before {
-    content: '▼ '; 
-    font-size: .9em;
+    content: "▼ ";
+    font-size: 0.9em;
 }
 
 .toc-closed::before {
-    content: '▶ ';
-    font-size: .8em;
-    padding-left: .3em;
+    content: "▶ ";
+    font-size: 0.8em;
+    padding-left: 0.3em;
 }
 
 #table-of-contents {
     width: 100%;
-    margin: 20px 0;
+    margin: 0.5em 0;
     display: none;
     background-color: var(--bg-color-alt1);
-    border-radius: .8em;
+    border-radius: 0.8em;
 }
 
 #table-of-contents ul {
     list-style-type: none;
     padding: 0;
+    margin: 0;
+    margin-top: 0.4em;
+    margin-bottom: 0.4em;
+    margin-left: 0.4em;
 }
 
 #table-of-contents li {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 0;
+    padding-bottom: 0.2em;
+    padding-top: 0.2em;
+    list-style: none;
+}
+
+#table-of-contents ul li ul {
+    padding: 0;
+    margin-bottom: 0;
+}
+
+#table-of-contents ul li ul li a::before {
+    content: "";
+    list-style: none;
+}
+
+#table-of-contents ul li ul li:before {
+    /* Nested Lists */
+    content: "- ";
+    font-weight: bold;
+    /* Some wild shenanigans here */
+    position: relative;
+    left: -1px;
 }
 
 #table-of-contents a::before {
@@ -413,22 +446,170 @@ color: var(--link-hover); /* Change color on hover */
 #table-of-contents a {
     text-decoration: none;
     color: var(--link-color);
-    margin: 20px;
+    margin: 0;
+    margin-top: 0.4em;
+    margin-bottom: 0.4em;
 }
 
 #table-of-contents a:hover {
     text-decoration: none;
-    color: var(--link-hover)
+    color: var(--link-hover);
+}
+
+/* Main Body Styling */
+
+body main h1 {
+    font-size: 2.4em;
+    margin: 0;
+    margin-top: 0.4em;
+    margin-bottom: 0.2em;
+}
+
+body main h2 {
+    font-size: 2em;
+    margin-top: 0.4em;
+    margin-bottom: 0.2em;
+}
+
+main h3 {
+    font-size: 1.6em;
+    margin-top: 0.3em;
+    margin-bottom: 0.15em;
+}
+
+main h4 {
+    font-size: 1.2em;
+    margin-top: 0.3em;
+    margin-bottom: 0.15em;
+}
+
+main h2.main_section_title {
+    text-align: center;
+}
+
+main ul {
+    padding: 0;
+    margin: 0, 0, 0, 0;
+    padding-left: 0.8em;
+}
+
+main ul ul {
+    padding-left: 1.6em;
+}
+
+main ul li {
+    padding: 0;
+    padding-top: 0.8em;
+    padding-bottom: 0.1em;
+    list-style: disc;
+}
+
+main ul li ul li {
+    /* Nested Lists */
+    padding-top: 0.4em;
+    list-style: none;
+}
+
+main ul li ul li:before {
+    /* Nested Lists */
+    content: "- ";
+    font-weight: bold;
+    /* Some wild shenanigans here */
+    position: relative;
+    left: -1px;
+}
+
+div.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    padding: 0;
+    margin: 0;
+}
+
+.table-wrapper table {
+    transform: scale(0.9); /* Shrinks table to 90% */
+    transform-origin: top left;
+    padding: 0;
+    margin: 0;
+    border: 1px solid;
+    border-collapse: collapse;
+}
+div.indent {
+    display: inline-block;
+    width: 2em;
+}
+
+table,
+th,
+td {
+    text-align: center;
+    border: 1px solid;
+    border-collapse: collapse;
+    padding: 0.2em 0.05em 0.2em 0.05em;
+}
+
+table th {
+    font-weight: bold;
+    border-bottom: 1px solid;
+}
+
+main p {
+    padding: 0;
+    margin: 0;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    text-indent: 1.5em;
+}
+
+li p {
+    padding-bottom: 1em;
+}
+
+/* Footer Styling */
+
+div#footer_spacer {
+    margin-top:10em;
 }
 
 footer {
     text-align: center;
-    padding: 10px;
-    margin-top: 20px;
+    padding: 0;
+    margin:0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    
     font-size: 0.9em;
 }
 
+footer p {
+    padding: 0;
+    margin: 0;
+}
+
 #jump-to-top-button {
+    width: 0.5em;
+    height: 0.5em;
+    background-image: url("assets/svg/up-arrow.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: none; /* Hidden by default */
     position: fixed;
-    /* Later */
+    bottom: 0.4em;
+    right: 0.2em;
+    z-index: 99;
+    font-size: 1em;
+    border: none;
+    outline: none;
+    background-color: var(--button-color);
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 1.2em 1.2em;
+    border-radius: 50%;
+    transition: opacity 0.4s ease;
+}
+
+#jump-to-top-button:hover {
+    background-color: var(--theme-toggle-hover);
 }
