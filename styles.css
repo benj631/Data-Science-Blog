@@ -1,0 +1,792 @@
+@font-face {
+    font-family: "Metropolis";
+    src: url("assets/fonts/Metropolis-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Metropolis";
+    src: url("assets/fonts/Metropolis-SemiBold.woff2") format("woff2");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Metropolis";
+    src: url("assets/fonts/Metropolis-RegularItalic.woff2") format("woff2");
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Metropolis";
+    src: url("assets/fonts/Metropolis-SemiBoldItalic.woff2") format("woff2");
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Metropolis";
+    src: url("assets/fonts/Metropolis-Light.woff2") format("woff2");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Metropolis";
+    src: url("assets/fonts/Metropolis-LightItalic.woff2") format("woff2");
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Monaspace Neon";
+    src: url("fonts/MonaspaceNeon-Regular.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.light-text {
+    font-weight: 300;
+}
+
+/* Apply Metropolis as the Default Font */
+body {
+    font-family: "Metropolis", sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Light Mode */
+
+.light-mode {
+    --bg-color: #ffffff;
+    --bg-color-alt1: #f0f0f0;
+    --text-color: #000000;
+
+    --link-color: #3d4141;
+    --link-hover: #0d122b;
+
+    --theme-toggle-bg-color: #ffffff;
+    --theme-toggle-shadow: rgba(0, 0, 0, 0.5);
+    --theme-toggle-hover: #dddddd;
+
+    --separator-color: rgba(0, 0, 0, 0.3); /* Light mode separator */
+    --visited-link-color: #0d122b;
+
+    --current: #000000 --button-color: #888888;
+
+    --highlighted-text: #ffcf33;
+
+    --border-highlight-color: #000000;
+}
+
+/* Dark Mode */
+
+.dark-mode {
+    --bg-color: rgb(19, 20, 24);
+    --bg-color-alt1: #39393f;
+    --text-color: #eaeaea;
+
+    --link-color: #b6b6b6;
+    --link-hover: #ffffff;
+
+    --theme-toggle-bg-color: #000000;
+    --theme-toggle-shadow: rgba(255, 255, 255, 0.3);
+    --theme-toggle-hover: #888888;
+
+    --separator-color: rgba(255, 255, 255, 0.3); /* Dark mode separator */
+    --visited-link-color: #eaeaea;
+
+    --current: #f2f2f2 --button-color: #ffffff;
+
+    --highlighted-text: #2c8ba8;
+
+    --border-highlight-color: #ffffff;
+}
+
+/* Adjust Default Link Styling */
+
+a {
+    text-decoration: none; /* Removes underline */
+    position: relative; /* Needed for the pseudo-element */
+    color: var(--link-color); /* Use your theme variable */
+}
+
+a::after {
+    content: "";
+    position: absolute;
+    bottom: -1px; /* Position the line at the bottom of the text */
+    left: 0;
+    width: 0%; /* Start with no width */
+    height: 1px; /* Line thickness */
+    background-color: var(--link-color); /* Choose underline color */
+    transition: width 0.2s ease-in-out; /* Animate width */
+}
+
+a:hover::after {
+    width: 100%; /* Expand the underline */
+}
+
+a:visited {
+    color: var(--visited-link-color); /* Custom visited link color */
+}
+
+a:hover {
+    color: var(--link-hover); /* Change color on hover */
+    text-decoration: none; /* Optional: add underline on hover */
+    transition: 0.4;
+}
+
+::selection {
+    background-color: var(--highlighted-text); /* Change the background color of selected text */
+}
+
+/* General Body Styling */
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition:
+        background 0.4s,
+        color 0.4s;
+}
+
+/* Default width settings */
+
+nav,
+main {
+    width: 100%;
+}
+
+@media (min-width: 1024px) {
+    /* For larger screens */
+
+    body {
+        font-size: 1.2em;
+    }
+
+    nav {
+        max-width: 0vw;
+    }
+
+    main {
+        max-width: 40vw;
+    }
+
+    nav,
+    main {
+        margin: 0 auto; /* Center them */
+    }
+}
+
+@media (max-width: 800px) {
+    /* For smaller screens */
+
+    body {
+        font-size: 1em; /* Don't mess with this */
+    }
+
+    header,
+    main {
+        padding: 20px; /* Adjust padding for mobile view */
+        box-sizing: border-box; /* Includes padding in total height. */
+    }
+
+    html body #jump-to-top-button {
+        padding: 1em 1em;
+    }
+}
+
+nav {
+    position: relative;
+    display: flex;
+    justify-content: center; /* Center nav contents */
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.nav-links-div {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+
+    font-size: 120%;
+}
+
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: var(--link-color);
+}
+
+nav a#current {
+    color: var(--current);
+    font-weight: bold;
+}
+
+#sun-icon {
+    display: none; /* Initially hidden */
+    width: 24px;
+    height: 24px;
+    background-image: url("assets/svg/sun.svg");
+    background-size: cover;
+}
+
+#moon-icon {
+    width: 24px;
+    height: 24px;
+    background-image: url("assets/svg/moon.svg");
+    background-size: cover;
+}
+
+#theme-toggle {
+    position: fixed;
+    right: 0.5em;
+    top: 0.5em;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    background: var(--theme-toggle-bg-color);
+    color: white;
+    border-radius: 40px;
+    font-size: 16px;
+    box-shadow: 0 2px 3px var(--theme-toggle-hover);
+}
+
+#theme-toggle:hover {
+    transition: all 0.4s ease-in-out; /* Slower, smoother transition */
+    background: var(--theme-toggle-hover);
+}
+
+.nav-line {
+    position: absolute;
+    bottom: 0; /* Aligns to bottom of nav */
+    width: 35vw; /* Full viewport width */
+    height: 1px; /* Thin separator */
+    background-color: var(--separator-color); /* Use theme color */
+}
+
+/* Layout */
+header {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.header-spacer {
+    height: 3.4em;
+}
+
+#prof-pic {
+    max-width: 200px;
+}
+
+img#profile-pic {
+    width: 10em; /* Set desired width */
+    height: 10em; /* Set desired height */
+    /* object-fit: cover; */ /* Ensures proper scaling */
+    /* clip-path: inset(10% 10% 10% 10%); */ /* Crops edges */
+    border-radius: 50%; /* Fully round */
+}
+
+#article_title {
+    padding-bottom: 0.5em;
+}
+
+header h1 {
+    font-size: 2.4em;
+    padding-top: 2em;
+    padding-bottom: 1em;
+}
+
+header h2.index {
+    font-size: 1.8em;
+}
+
+main {
+    display: flex;
+    flex: 1; /* Stretch top to bottom */
+    flex-direction: column; /* Stack the content vertically */
+    justify-content: flex-start; /* Align content to the top */
+    align-items: flex-start; /* Align content to the left */
+    padding: 20px; /* Add padding around the content */
+    width: 100%; /* Ensure it spans the full width of its parent */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* Post Styling */
+
+.post {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.post-title a:visited {
+    color: var(--link-color);
+}
+
+.post-title a:visited:hover {
+    color: var(--link-hover); /* Change color on hover */
+    text-decoration: none; /* Optional: add underline on hover */
+    transition: 0.4;
+}
+
+.post-separator {
+    display: block;
+    height: 1px;
+    width: 100%;
+    background: var(--separator-color); /* Use your theme color */
+    border: none; /* Removes default border */
+    margin: 10px 0;
+}
+
+.post .post-title {
+}
+
+.post .post-date {
+}
+
+/* Table of Contents */
+
+/* Button */
+#toggle-toc {
+    background-color: var(--button-color); /* Set default button color */
+    color: var(--button-text-color); /* Set text color */
+    border: none;
+    padding: 10px 15px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    transition:
+        background-color 0.3s ease,
+        transform 0.2s ease;
+    box-shadow: 0 2px 5px var(--theme-toggle-shadow);
+    margin-top: 0.4em;
+    margin-bottom: 5px;
+}
+
+#toggle-toc:hover {
+    background-color: var(--button-color); /* Darken button on hover */
+    transform: scale(1.05); /* Slightly increase size for hover effect */
+}
+
+#toggle-toc:focus {
+    outline: none;
+    box-shadow: 0 0 5px 2px var(--theme-toggle-shadow); /* Focus outline for accessibility */
+}
+
+.toc-open::before {
+    content: "▼ ";
+    font-size: 0.9em;
+}
+
+.toc-closed::before {
+    content: "▶ ";
+    font-size: 0.8em;
+    padding-left: 0.3em;
+}
+
+#table-of-contents {
+    width: 100%;
+    margin: 0.5em 0;
+    display: none;
+    background-color: var(--bg-color-alt1);
+    border-radius: 0.8em;
+}
+
+#table-of-contents ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 0.4em;
+    margin-bottom: 0.4em;
+    margin-left: 0.4em;
+}
+
+#table-of-contents li {
+    margin: 0;
+    padding-bottom: 0.2em;
+    padding-top: 0.2em;
+    list-style: none;
+}
+
+#table-of-contents ul li ul {
+    padding: 0;
+    margin-bottom: 0;
+}
+
+#table-of-contents ul li ul li a::before {
+    content: "";
+    list-style: none;
+}
+
+#table-of-contents ul li ul li:before {
+    /* Nested Lists */
+    content: "- ";
+    font-weight: bold;
+    /* Some wild shenanigans here */
+    position: relative;
+    left: -1px;
+}
+
+#table-of-contents a::before {
+    content: "• ";
+}
+
+#table-of-contents a {
+    text-decoration: none;
+    color: var(--link-color);
+    margin: 0;
+    margin-top: 0.4em;
+    margin-bottom: 0.4em;
+}
+
+#table-of-contents a:hover {
+    text-decoration: none;
+    color: var(--link-hover);
+}
+
+/* Main Body Styling */
+
+body main h1 {
+    font-size: 2.4em;
+    margin: 0;
+    margin-top: 0.4em;
+    margin-bottom: 0.2em;
+}
+
+body main h2 {
+    font-size: 2em;
+    margin-top: 0.4em;
+    margin-bottom: 0.2em;
+}
+
+main h3 {
+    font-size: 1.6em;
+    margin-top: 0.3em;
+    margin-bottom: 0.15em;
+}
+
+main h4 {
+    font-size: 1.2em;
+    margin-top: 0.3em;
+    margin-bottom: 0.15em;
+}
+
+main h2.main_section_title {
+    text-align: center;
+}
+
+
+main ol{
+
+    margin-top:0;
+}
+
+main ul {
+    padding: 0;
+    margin: 0, 0, 0, 0;
+    padding-left: 0.8em;
+}
+
+main ul ul {
+    padding-left: 1.6em;
+}
+
+main ul li, main ol li {
+    padding: 0;
+    padding-top: 0.6em;
+    padding-bottom: 0.1em;
+    list-style: disc;
+}
+
+
+main ul li ul li {
+    /* Nested Lists */
+    padding-top: 0.4em;
+    list-style: none;
+}
+
+main ul li ul li:before {
+    /* Nested Lists */
+    content: "- ";
+    font-weight: bold;
+    /* Some wild shenanigans here */
+    position: relative;
+    left: -1px;
+}
+
+/* PLotly */
+iframe.plot-frame {
+  width: 100%;
+  aspect-ratio: 1.4 / 1; /* Very important. */
+  border: none;
+}
+
+/* Spacing when there's a chart above. */
+p.plot-above {
+    margin-top:1.75em;
+}
+
+p.plot-below {
+    margin-bottom:1.75em;
+}
+
+
+div.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    padding: 0;
+    margin: 0;
+}
+
+.table-wrapper table {
+    transform: scale(0.9); /* Shrinks table to 90% */
+    transform-origin: top left;
+    padding: 0;
+    margin: 0;
+    border: 1px solid;
+    border-collapse: collapse;
+}
+div.indent {
+    display: inline-block;
+    width: 2em;
+}
+
+table,
+th,
+td {
+    text-align: center;
+    border: 1px solid;
+    border-collapse: collapse;
+    padding: 0.2em 0.05em 0.2em 0.05em;
+}
+
+table th {
+    font-weight: bold;
+    border-bottom: 1px solid;
+}
+
+main p {
+    padding: 0;
+    margin: 0;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    text-indent: 1.5em;
+}
+
+li p {
+    padding-bottom: 1em;
+}
+
+/* Code Block Styling */
+
+pre.code {
+    position: relative;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 12px;
+    border-color: var(--border-highlight-color);
+    background-color: var(--bg-color-alt1);
+    color: var(--text-color);
+    width: 100%;
+
+    overflow-x: auto; /* Enables horizontal scrolling */
+    white-space: pre; /* Preserves formatting and disables line breaks */
+}
+
+pre.code code.block {
+    display: block; /* Keep it contained and measured */
+    font-family: "Monaspace Neon", monospace;
+    font-size: 1em;
+    white-space: pre; /* Ensures no wrapping */
+    word-break: normal; /* Prevents word splitting */
+    background-color: var(--bg-color-alt1);
+    color: var(--text-color);
+    text-align: left;
+    
+    margin: 0.5em 0;
+    padding: 0 .75em;
+}
+
+pre.code::before {
+    content: "{" attr(data-lang) "}";
+    position: absolute;
+    top: 0.3em;
+    right: 0.3em;
+    font-size: 1em;
+    padding: 0.2em 0.5em;
+    background-color: var(--bg-color-alt1);
+    color: var(--text-color);
+    border-bottom-right-radius: 6px;
+    opacity: 1;
+    text-shadow:
+        1px 1px 3px var(--bg-color),
+        0 0 6px var(--bg-color);
+    pointer-events: none;
+}
+
+button.code-toggle{
+    display:none;
+}
+
+.code-extra {
+  display: none;
+}
+
+/* Individual code lines (inserted via JS) */
+.code-line {
+    font-family: "Monaspace Neon", monospace;
+    font-size: 1em;
+    line-height: 1.5em; /* Actually needed. Other code adjusts to this.*/
+    margin-right: 0;
+    text-indent: none;
+}
+
+/* Line numbers — tighter left alignment and theme-based color */
+.line-number {
+    display: inline-block;
+    width: 1.8em; /* narrower line number column */
+    margin-right: .5em; /* less spacing between line number and code */
+    padding-right: 0.6em; /* space between line and code */
+    text-align: right;
+    opacity: 0.6;
+    border-right: 1px solid var(--separator-color);
+    color: var(--separator-color); /* theme-aware faded color */
+    user-select: none;
+}
+
+/* Show button on hover */
+pre.code {
+  position: relative;
+}
+
+/* The actual button that replaces ::after */
+.copy-button {
+  position: absolute;
+  bottom: 0.4em;
+  right: 0.6em;
+  font-size: 1em;
+  background-color: var(--bg-color-alt1);
+  border: 1px solid var(--separator-color);
+  padding: 0.3em 0.4em;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Only show button when hovering pre block */
+pre.code:hover .copy-button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Copied! state */
+.copy-button.copied {
+  font-size: 0.75em;
+  animation: fadeOutCopied 3s forwards;
+  pointer-events: none;
+}
+
+/* Fade-out animation */
+@keyframes fadeOutCopied {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+pre.pre-output {
+  background-color: var(--bg-color-alt1, #f0f0f0);
+  border-left: 4px solid var(--border-highlight-color, #999);
+  padding: 0.5em 1em;
+  font-family: var(--code-font, monospace);
+  white-space: pre-wrap;
+  margin: 0.5em 0 1em;
+}
+
+code.output {
+  font-size: 0.95em;
+  color: var(--text-color, #222);
+}
+
+/* Footer Styling */
+div#footer_spacer {
+    margin-top: 10em;
+}
+
+footer {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    font-size: 0.9em;
+}
+
+footer p {
+    padding: 0;
+    margin: 0;
+}
+
+/* jumpt to top button styling */
+#jump-to-top-button {
+    width: 0.5em;
+    height: 0.5em;
+    background-image: url("assets/svg/up-arrow.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: none; /* Hidden by default */
+    position: fixed;
+    bottom: 0.4em;
+    right: 0.2em;
+    z-index: 99;
+    font-size: 1em;
+    border: none;
+    outline: none;
+    background-color: var(--button-color);
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 1.2em 1.2em;
+    border-radius: 50%;
+    transition: opacity 0.4s ease;
+}
+
+#jump-to-top-button:hover {
+    background-color: var(--theme-toggle-hover);
+}

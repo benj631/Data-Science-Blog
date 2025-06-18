@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Data Science Tools</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+
+    <body class="dark-mode">
+        <!-- Default to dark mode -->
+
+        <nav>
+            <div class="nav-links-div">
+                <a href="index.html">Home</a>
+                <a href="posts.html">Posts</a>
+                <a href="about.html">About</a>
+            </div>
+
+            <button id="theme-toggle">
+                <object id="sun-icon" data="path/to/sun-icon.svg" type="image/svg+xml"></object>
+                <object id="moon-icon" data="path/to/moon-icon.svg" type="image/svg+xml"></object>
+            </button>
+
+            <div class="nav-line"></div>
+        </nav>
+
+        <header>
+            <h1 id="article_title">A Compilation of Common Data Science Tools</h1>
+            <p class="date"><i>Ben Jacobs - 05 March 2025</i></p>
+        </header>
+
+        <main>
+            <h2 class="main_section_title">Table of Contents</h2>
+            <button id="toggle-toc">Toggle Table of Contents</button>
+            <div id="table-of-contents">
+                <ul>
+                    <li><a href="#H2_Overview">Overview</a></li>
+                    <li><a href="#H2_DataScienceLanguages">Data Science Languages</a>
+                        <ul>
+                            <li><a href="#H3_MachineLearninginPython">Machine Learning in Python</a></li>
+                            <li><a href="#H3_ParallelProcessingandCloudComputing">Parallel Processing and Cloud Computing</a></li>
+                            <li><a href="#H3_APIs">APIs</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="#H3_VisualizationLibraries">Visualization Libraries</a></li>
+                    <li><a href="#TableofVisualizationLibraries">Table of Visualization Libraries</a></li>
+                    
+                    <li><a href="#H2_RandRStudio">R and R Studio</a></li>
+                    <li><a href="#H2_OtherTools">Other Tools</a></li>
+                    <li><a href="#H2_BackendIntegrationTools">Backend Integration Tools</a></li>
+                    <li><a href="#H2_Databases">Databases</a>
+                        <ul>
+                        <li><a href="#H3_SQLRelationalDatabases">SQL / Relational Databases</a></li>
+                        <li><a href="#H3_NoSQLDatabases">NoSQL Databases</a></li>
+                        </ul>
+                    </li>
+                    
+                    
+                    
+                    <li><a href="#H2_DashboardingandVisualizationPlatforms">Dashboarding and Visualization Platforms</a></li>
+                    <li><a href="#H2_DataStorageFormats">Data Storage Formats</a></li>
+                    <li><a href="#H2_MonitoringandMetrics">Monitoring and Metrics</a></li>
+                    <li><a href="#H2_Conclusion">Conclusion</a></li>
+                </ul>
+            </div>
+
+            <h2 id="H2_Overview" class="main_section_title">Overview</h2>
+            <p>
+                Data Science can be done in many different ways, with many different tools. I've compiled here some
+                common resources used for data science, grouped them, and included links and short explanations. When I
+                was starting data science, I wish I could have seen the most common tools grouped together in a way like
+                this, so I put one together myself.
+            </p>
+
+            <h2 id="H2_DataScienceLanguages" class="main_section_title">Data Science Languages</h2>
+
+            <p>There are many programming languages used in Data Science. Below are some of the most commonly used.</p>
+            <ul>
+                <li>
+                    <strong>Python</strong> -
+                    <a href="https://docs.python.org/3/faq/general.html#what-is-python">docs.python.org</a>
+                    <p>
+                        "Python is an interpreted, object-oriented, high-level programming language with dynamic
+                        semantics. Its high-level built in data structures, combined with dynamic typing and dynamic
+                        binding, make it very attractive[...] Python's simple, easy to learn syntax emphasizes
+                        readability." <br />
+                        - <a href="https://www.python.org/doc/essays/blurb/">python.org/doc/essays/blurb/</a>"
+                    </p>
+                    <ul>
+                        <li>Does not need to be compiled<br /></li>
+                        <li>Syntax is fairly straightforward</li>
+                        <li>There are many libraries and resources available</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Javascript</strong>
+                    <p>
+                        <i
+                            >"The analogy for this question is: can I use a hammer to dig a hole? Sure you can but it's
+                            going to cost you a lot more effort. Just use the shovel, just use Python / R."</i
+                        >
+                        - Anon
+                    </p>
+                    <ul>
+                        <li>Less extensive resources and libaries for data science</li>
+                        <li>There can be issues with typing data structures</li>
+                        <li>Javascript has asynchronous processing which may help in some situations</li>
+                        <li>
+                            See also:
+                            <a href="https://www.bairesdev.com/blog/can-javascript-be-used-for-data-science/"
+                                >Can Javascript Be Used For Data Science?</a
+                            >
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong>SQL</strong><br />
+                    <p>
+                        SQL, or Structured query language, is a programming language for relational databases. It can be
+                        used with database softwares to quickly filter through and work with large amounts of
+                        information.
+                    </p>
+                </li>
+                <li>
+                    <strong>R</strong> - <a href="https://www.r-project.org/">https://www.r-project.org/</a>
+                    <p>
+                        "R is a free software environment for statistical computing and graphics."
+                        <a href="https://www.r-project.org/">https://www.r-project.org/</a>
+                    </p>
+                    <ul>
+                        <li>R can be used for complex statistical modeling and visualisation</li>
+                        <li>
+                            R can do some things in a couple lines of code what might take other languages many more
+                            lines of code.
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Julia</strong> - <a href="https://docs.julialang.org/en/v1/">https://julialang.org/</a
+                    ><br />
+                    <p>
+                        Created by Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and Alan Edelman in 2012, Julia
+                        infers the type of data it's using at run time. It has a flexible data typing system, so code
+                        works for multiple types of data without breaking. However, you can enforce constraints if you
+                        wish.
+                    </p>
+                    <p>
+                        Julia uses a programming paradigm called 'Multiple Dispatch' where, based on all of the types of
+                        a function's inputs, the runtime environment will pick which 'version' of a function would best
+                        handle those data types.
+                    </p>
+                    <ul>
+                        <li>
+                            Julia can 'beat' python in some instances, but Python still remains more popular amongst
+                            data scientists.
+                        </li>
+                        <li>Can run on GPUs efficiently.</li>
+                        <li>Julia libraries end in .jl</li>
+                        <li>Not object oriented in the traditional sense</li>
+                        <li>IJulia is a Julia-language backend combined with the Jupyter interactive environment</li>
+                    </ul>
+                    <p>See also: <br /></p>
+                    <div class="indent"></div>
+                    <a href="https://www.datacamp.com/blog/julia-vs-python-which-to-learn"
+                        >Python vs. Julia: Key Differences</a
+                    ><br />
+                    <div class="indent"></div>
+                    <a href="https://julialang.org/blog/2012/02/why-we-created-julia/">Why Was Julia Created?</a><br />
+                    <div class="indent"></div>
+                    <a href="https://youtu.be/JYs_94znYy0">Julia in 100 Seconds</a>
+                </li>
+            </ul>
+
+            <h2 id="H2_PythonPackagesandFrameworks" class="main_section_title" >Python Packages and Frameworks</h2>
+
+            <h3>Dataframes and Basic Data Wrangling</h3>
+            <ul>
+                <li>
+                    <strong>Numpy</strong> - <a href="https://numpy.org/">Numpy.org</a>
+                    <p>
+                        (Numerical Python) handles different kinds of computations above base python. Pandas and Polars
+                        are more commonly used but some complicated numerical computations like with matrices or algebra
+                        can still better in Numpy. Pandas is built partially on Numpy. (2005)
+                    </p>
+                </li>
+                <li>
+                    <strong>Pandas</strong> - <a href="https://pandas.pydata.org/">pandas.pydata.org</a>
+                    <p>
+                        Standard python library for loading data frames. Built on Numpy. Typing is assumed sometimes.
+                        Strengths - been the defacto library for data science and analysis for awhile now.
+                    </p>
+                </li>
+                <li>
+                    <strong>Polars</strong> - <a href="https://pola.rs/">Pola.rs</a>
+                    <p>
+                        Newer python library that works similarly to pandas. Many head-to-head tests show that Polars is
+                        faster. Typing is never assumed. Runs in parallel and written in lower level programming than
+                        pandas (which is written on numpy).
+                    </p>
+                    <ul>
+                        <li>Strengths - faster than pandas, and simpler in some instances.</li>
+                        <li>
+                            Because it's newer, there are not as many libraries that work with it compared to pandas.
+                        </li>
+                    </ul>
+                    See also: <br />
+                    <div class="indent"></div>
+                    <a href="https://blog.jetbrains.com/pycharm/2024/07/polars-vs-pandas/"
+                        >Blog.jetbrains - Polars vs Pandas</a
+                    >
+                </li>
+                <li>
+                    <strong>GeoPandas</strong> - <a href="https://geopandas.org/en/stable/about.html">geopandas.org</a>
+                    <p>
+                        GeoPandas combines pandas and shapely to provide geospatial operations in pandas. Enables
+                        operations in Python that would otherwise require a spatial database such as PostGIS. (2013)
+                    </p>
+                </li>
+                <li>
+                    <strong>Xarray</strong> -
+                    <a href="https://docs.xarray.dev/en/latest/getting-started-guide/why-xarray.html">xarray.dev</a>
+                    <p>
+                        Xarray introduces labels in the form of dimensions, coordinates and attributes on top of raw
+                        NumPy-like multidimensional arrays, which allows for a more intuitive, more concise, and less
+                        error-prone developer experience.
+                    </p>
+                </li>
+            </ul>
+
+            <h3 id="H3_MachineLearninginPython">Machine Learning in Python</h3>
+            <p>
+                Pytorch, Scikit-learn, and Tensorflow are 3 separate and independent python libraries for machine
+                learning in python.
+            </p>
+            <ul>
+                <li>
+                    <strong>Pytorch</strong> -
+                    <a href="https://www.nvidia.com/en-us/glossary/pytorch/">nvidia.com/glossary/pytorch</a>
+                    <p>
+                        "PyTorch is a fully featured framework for building deep learning models, which is a type of
+                        machine learning that’s commonly used in applications like image recognition and language
+                        processing. Written in Python, it’s relatively easy for most machine learning developers to
+                        learn and use. PyTorch is distinctive for its excellent support for GPUs and its use of
+                        reverse-mode auto-differentiation, which enables computation graphs to be modified on the fly.
+                        This makes it a popular choice for fast experimentation and prototyping."
+                        <a href="https://www.nvidia.com/en-us/glossary/pytorch/">(Nvidia)</a>
+                    </p>
+                </li>
+                <li>
+                    <strong>Tensorflow</strong> - <a href="https://www.tensorflow.org/">tensorflow.org</a>
+                    <p>"TensorFlow makes it easy to create ML models that can run in any environment."</p>
+                    <p>
+                        A tensor is a multidimensional array, used to represent data with multiple dimensions, such as
+                        image data.
+                    </p>
+                </li>
+                <li>
+                    <strong>Scikit learn / sklearn</strong> -
+                    <a href="https://scikit-learn.org/stable/">scikit-learn.org</a>
+                    <p>Scikit learn is a suite of machine learning tools for python. Main libraries include:</p>
+                    <ul>
+                        <li>Classification</li>
+                        <li>Regression</li>
+                        <li>Clustering</li>
+                        <li>Dimensionality Reduction</li>
+                        <li>Model Selection</li>
+                        <li>Preprocessing</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>MLflow</strong>
+                    <p>
+                        MLflow is an open-source platform that is built to assist in the machine learning process. It
+                        helps with tracking, testing, and evaluation to help the process run smoother. It works with a
+                        variety of libraries, including the three listed previously.
+                    </p>
+                </li>
+            </ul>
+
+            <h3 id="H3_ParallelProcessingandCloudComputing">
+                Parallel Processing and Cloud Computing
+            </h3>
+            <ul>
+                <li>
+                    <strong>Apache Spark</strong><br />
+                    The most widely-used engine for scalable computing
+                </li>
+                <li>
+                    <strong>Pyspark – the python API for Apache Spark</strong><br />
+                    <a href="https://spark.apache.org/docs/latest/api/python/index.html"
+                        >https://spark.apache.org/docs/latest/api/python/index.html</a
+                    ><br />
+                    Spark is also available for Python, SQL, Scala, Java, and R<br />
+                    Spark can be used through Docker
+                </li>
+                <li>
+                    <strong>Spark RDD Example</strong><br />
+                    Spark allows computation loads to be spread across different machines (or nodes) to make computation
+                    faster and scalable. You can create a spark session, manipulate data, and run computations, and
+                    spark will share the task across other nodes. Spark is helpful for handing larger computation tasks
+                    where a single computer might struggle to handle the data.
+                </li>
+                <li>
+                    <strong>Dask</strong><br />
+                    Similar to Apache Spark<br />
+                    Built using pandas datasets<br />
+                    According to their website, runs 50% faster than pyspark<br />
+                    <a href="https://docs.coiled.io/blog/spark-vs-dask.html?utm_source=dask.org&utm_medium=homepage"
+                        >https://docs.coiled.io/blog/spark-vs-dask.html</a
+                    ><br />
+                    Open source and free to run on your own computer.
+                </li>
+            </ul>
+
+            <h3 id="H3_APIs" class="main_section_title">APIs</h3>
+            <ul>
+                <li>
+                    <strong>FastAPI</strong> - <a href="https://fastapi.tiangolo.com/">fastapi.tiangolo.com/</a> <br />
+                    <p>
+                        "FastAPI is a modern, fast (high-performance), web framework for building APIs with Python based
+                        on standard Python type hints." <br />
+                        - <a href="https://fastapi.tiangolo.com/">fastapi.tiangolo.com/</a>
+                    </p>
+                </li>
+            </ul>
+
+            <h3 id="H3_VisualizationLibraries">Visualization Libraries</h3>
+            <p>
+                There are a lot of options for visualization, and some libraries will work just as well as some of the
+                others. Find what works for you.
+            </p>
+
+            <ul>
+                <li><strong>Bokeh</strong> – <a href="http://bokeh.org/">bokeh.org/</a></li>
+                <li><strong>Altair</strong> – <a href="https://altair-viz.github.io/">altair-viz.github.io/</a></li>
+                <li>
+                    <strong>Matplotlib</strong> –
+                    <a href="https://matplotlib.org/stable/gallery/index">matplotlib.org/stable/gallery/index</a>
+                </li>
+                <li>
+                    <strong>Plotly / Express</strong> –
+                    <a href="https://plotly.com/graphing-libraries/">plotly.com/graphing-libraries/</a><br />
+                    Express is a simplified wrapper for Plotly designed to make it faster and simpler to visualize
+                    information, using less coding.
+                </li>
+                <li><strong>PlotAPI</strong> – <a href="https://plotapi.com/">plotapi.com/</a></li>
+                <li><strong>Seaborn</strong> – <a href="https://seaborn.pydata.org/">seaborn.pydata.org/</a></li>
+                <li><strong>Ggplot2</strong> - <a href="https://ggplot2.tidyverse.org/">ggplot2.tidyverse.org/</a></li>
+                <li><strong>D3.js</strong> - <a href="https://d3js.org/">d3js.org</a></li>
+            </ul>
+
+            <h4 id="TableofVisualizationLibraries" class="main_section_title">Table of Visualization Libraries</h4>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Year Released</th>
+                            <th>Main Language</th>
+                            <th>Other Languages / Interfaces</th>
+                            <th>Strengths</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="https://altair-viz.github.io">Altair</a></td>
+                            <td>2016</td>
+                            <td>Python</td>
+                            <td>None – It generates Vega‑Lite JSON specs</td>
+                            <td>Can stack simple syntax and graphs to make more complicated ones</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://bokeh.org">Bokeh</a></td>
+                            <td>2013</td>
+                            <td>Python</td>
+                            <td>JavaScript (BokehJS for rendering)</td>
+                            <td>Interactive web plots and dashboards.</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://bqplot.readthedocs.io">Bqplot</a></td>
+                            <td>2014</td>
+                            <td>Python</td>
+                            <td>None</td>
+                            <td>Primarily designed for interactive Jupyter notebooks.</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://d3js.org/what-is-d3">D3.js</a></td>
+                            <td>2011</td>
+                            <td>JavaScript</td>
+                            <td>Wrappers exist in other languages</td>
+                            <td>Great for web visualizations.</td>
+                        </tr>
+                        <tr>
+                            <td><a href="http://yhat.github.io/ggpy/">ggplot (ggplot2) (Python)</a></td>
+                            <td>2013</td>
+                            <td>Python</td>
+                            <td>None – Inspired by R’s ggplot2</td>
+                            <td>Great for plotting in both R and Python. Easily extendable.</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://holoviews.org">HoloViews</a></td>
+                            <td>2015</td>
+                            <td>Python</td>
+                            <td>None (uses Bokeh or Matplotlib)</td>
+                            <td>
+                                Makes visualization easy, great for large datasets, integrates with Bokeh/Matplotlib.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://hvplot.holoviz.org">hvPlot - HoloViz</a></td>
+                            <td>-</td>
+                            <td>Python</td>
+                            <td>None (built on HoloViews)</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://matplotlib.org">Matplotlib</a></td>
+                            <td>2003</td>
+                            <td>Python</td>
+                            <td>None officially</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://plotapi.com">PlotAPI</a></td>
+                            <td>?</td>
+                            <td>Language‑agnostic</td>
+                            <td>Any language that can make HTTP requests</td>
+                            <td>Paid framework that excels at interactive, colorful, and dynamic visualization.</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://plotly.com/python/">Plotly / Plotly Express</a></td>
+                            <td>2013</td>
+                            <td>Python (primary)</td>
+                            <td>R, MATLAB, Julia, JavaScript</td>
+                            <td>Plotly is exceptional for making graphs and interactive graphs.</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://seaborn.pydata.org">Seaborn</a></td>
+                            <td>2012</td>
+                            <td>Python</td>
+                            <td>None</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://vega.github.io/vega-lite">Vega‑Lite</a></td>
+                            <td>2016</td>
+                            <td>JSON spec (JS)</td>
+                            <td>Python (via Altair), R (via wrappers)</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 id="H2_RandRStudio" class="main_section_title">R and R Studio</h2>
+            <ul>
+                <li>
+                    <strong>R Studio</strong> –
+                    <a href="https://posit.co/download/rstudio-desktop/">posit.co/download</a>
+                </li>
+                <li><strong>Tidyverse</strong> – <a href="https://www.tidyverse.org/">tidyverse.org</a></li>
+                <li><strong>Dplyr</strong> – <a href="https://dplyr.tidyverse.org/">dplyr.tidyverse.org</a></li>
+                <li>
+                    <strong>Car</strong> –
+                    <a href="https://cran.r-project.org/package=car">cran.r-project.org/package=car</a>
+                </li>
+                <li><strong>Readr</strong> – <a href="https://readr.tidyverse.org/">readr.tidyverse.org</a></li>
+                <li><strong>Purrr</strong> – <a href="https://purrr.tidyverse.org/">purrr.tidyverse.org</a></li>
+                <li><strong>Broom</strong> – <a href="https://broom.tidyverse.org/">broom.tidyverse.org</a></li>
+                <li>
+                    <strong>Pander</strong>
+                    <a href="https://cran.r-project.org/package=pander">cran.r-project.org/package=pander</a>
+                    <p>A tool for rendering R objects into Pandoc's markdown format.</p>
+                </li>
+            </ul>
+
+            <h2 id="H2_OtherTools" class="main_section_title">Other Tools</h2>
+            <ul>
+                <li><strong>Apache Superset</strong></li>
+                <li><strong>Jupyter Notebook</strong></li>
+            </ul>
+
+            <h2 id="H2_BackendIntegrationTools" class="main_section_title">Backend Integration Tools</h2>
+            <ul>
+                <li>
+                    <strong>Node.js</strong> – <a href="https://broom.tidyverse.org/">https://nodejs.org/en</a>
+                    <p>
+                        Node can be used to write 'serverside' or 'backend scripting', or just script on your computer.
+                        It can be used alone or with Python as it has asynchronous functionality that can make it better
+                        than Python for these use cases.
+                    </p>
+                </li>
+                <li>
+                    <strong>Docker</strong> - <a href="https://www.docker.com/">Docker.com</a>
+                    <p>
+                        Docker provides the ability to package and run an application in a loosely isolated environment
+                        called a container. The isolation and security lets you run many containers simultaneously on a
+                        given host. Containers are lightweight and contain everything needed to run the application, so
+                        you don't need to rely on what's installed on the host. -
+                        <a href="https://docs.docker.com/get-started/docker-overview/"
+                            >docker.com/get-started/docker-overview</a
+                        >
+                    </p>
+                </li>
+            </ul>
+
+            <h2 id="H2_Databases" class="main_section_title">Databases</h2>
+            <h3 id="H3_SQLRelationalDatabases">SQL / Relational Databases</h3>
+            <ul>
+                <li>MySQL – Open-source, widely used for web applications.</li>
+                <li>
+                    PostgreSQL – Open-source SQL relational database with strong features.
+                    <ul>
+                        <li>Free and open source</li>
+                        <li><a href="https://www.postgresql.org/about/">postgresql.org/about</a></li>
+                    </ul>
+                </li>
+                <li>SQLite – Lightweight, embedded SQL database.</li>
+                <li>Microsoft SQL Server – Enterprise-level database from Microsoft.</li>
+                <li>Oracle Database – High-performance, enterprise-grade database.</li>
+                <li>
+                    DuckDB
+                    <ul>
+                        <li>MotherDuck</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3 id="H3_NoSQLDatabases">NoSQL Databases</h3>
+            <ol>
+                <li>
+                    MongoDB – Document-oriented, JSON-based database.
+                    <ul>
+                        <li>Uses BSON (binary JSON) and MQL (similar to SQL)</li>
+                        <li>Free and paid options (MongoDB Atlas, Enterprise)</li>
+                        <li>Sharding – Splitting up data across servers</li>
+                        <li><a href="https://www.mongodb.com/">mongodb.com</a></li>
+                    </ul>
+                </li>
+                <li>
+                    Cassandra – Distributed NoSQL database
+                    <ul>
+                        <li>Great for high availability and heavy loads</li>
+                        <li>Free and open source</li>
+                        <li>Paid options: DataStax Enterprise, Amazon Keyspaces, Azure Cosmos DB</li>
+                        <li>
+                            “Distributed” means Cassandra can run on multiple machines while appearing to users as a
+                            unified whole
+                        </li>
+                        <li><a href="https://cassandra.apache.org/_/index.html">cassandra.apache.org</a></li>
+                    </ul>
+                </li>
+                <li>Redis – In-memory key-value store, great for caching</li>
+                <li>Flat storage – Amazon S3</li>
+            </ol>
+
+            <h2 id="H2_DashboardingandVisualizationPlatforms" class="main_section_title">
+                Dashboarding and Visualization Platforms
+            </h2>
+            <ul>
+                <li><strong>PowerBi</strong></li>
+                <li>
+                    <strong>Looker</strong>
+                    <p>Google's online dashboarding website</p>
+                </li>
+                <li>
+                    <strong>Redash</strong>
+                    <ul>
+                        <li>Integrates SQL and dashboards in a frontend editor</li>
+                        <li>Connect to a backend database and create visualizations quickly</li>
+                        <li>Offers both open-source (free) and paid options</li>
+                    </ul>
+                </li>
+                <li><strong>Tableau</strong> – <a href="https://www.tableau.com/">tableau.com</a></li>
+                <li><strong>BigQuery</strong></li>
+                <li><strong>Looker</strong> – Google’s dashboarding and visualization platform</li>
+                <li><strong>Snowflake</strong> – <a href="https://www.snowflake.com/en/">snowflake.com</a></li>
+            </ul>
+
+            <h2 id="H2_DataStorageFormats" class="main_section_title">
+                Data Storage Formats
+            </h2>
+            <ul>
+                <li>
+                    <strong>JSON</strong>
+                    <ul>
+                        <li>JavaScript Object Notation</li>
+                        <li>Widely used in many programming languages</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>SQLite</strong>
+                    <ul>
+                        <li>Implements part of SQL to store data in a single file</li>
+                        <li>Readable by other programs such as Python or R</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Parquet</strong> – <a href="https://parquet.apache.org/">parquet.apache.org</a>
+                    <ul>
+                        <li>Column-oriented file format for efficient storage</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>CSV</strong>
+                    <ul>
+                        <li>Comma-separated values</li>
+                        <li>Simple, human-readable plaintext format</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2 id="H2_MonitoringandMetrics" class="main_section_title">Monitoring and Metrics</h2>
+            <p>
+                These tools and services are better geared towards companies than individuals, but are still worth
+                knowing about.
+            </p>
+            <ul>
+                <li>
+                    <strong>Datadog</strong> – <a href="https://www.datadoghq.com/">datadoghq.com</a>
+                    <p>"Datadog is the observability and security platform for cloud applications."</p>
+                    <p>From <a href="https://www.datadoghq.com/about/leadership/">datadoghq.com/about/leadership</a></p>
+                    <p>
+                        Datadog is a performance and metrics tracking service geared towards large networks and
+                        interconnected applications.
+                    </p>
+                </li>
+                <li><strong>Datathink</strong></li>
+                <li><strong>Snowflake</strong></li>
+                <li>
+                    <strong>Amazon Redshift</strong><br />
+                    <p>"Tens of thousands of customers use Amazon Redshift for modern data analytics at scale..."</p>
+                </li>
+            </ul>
+            <h2 id="H2_Conclusion">Conclusion</h2>
+            <p>
+                There are so many tools and options available for data science. I hope that aggregating and succinctly
+                explaining what these tools are for can help you better explore and analyze your next data set. Happy
+                wrangling!
+            </p>
+        </main>
+        
+        <div id="footer_spacer"></div>
+
+        <footer>
+            <i>
+                I'd appreciate your 2&cent;: thisisbenjacobs@gmail.com <br />
+                Or at least a penny for my thoughts - Venmo: thisisben.j
+                
+            </i>
+        </footer>
+
+        <footer>
+            <p>&copy; 2025 Ben Jacobs</p>
+            <p class="light-text"><i> Made with vanilla html/css/js and love by Ben </i></p>
+        </footer>
+        
+        <button id="jump-to-top-button" title="Go to top"></button>
+        <script src="scripts.js"></script>
+    </body>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+  
+<body class="light-mode"> <!-- Default to light mode -->
+
+    <nav>
+        <div class="nav-links-div">
+            <a href="index.html">Home</a>
+            <a href="somelink.html">Posts</a>
+            <a href="somelink.html">About</a>
+        </div>
+        
+        <button id="theme-toggle">
+            <object id="sun-icon" data="path/to/sun-icon.svg" type="image/svg+xml"></object>
+            <object id="moon-icon" data="path/to/moon-icon.svg" type="image/svg+xml"></object>
+        </button>
+        
+        <div class="nav-line"></div>
+    </nav>
+    
+
+    <header>
+        <h1>Examining EXIF Data from My Photography - Should I Trade Lenses?</h1>
+    </header>
+    
+    <main>
+        <h2> Table of Contents</h2>
+        <button id="toggle-toc">Toggle Table of Contents</button>
+        <div id="table-of-contents">
+            <ul>
+                <li><a href="#section1">Section 1</a></li>
+                <li><a href="#section2">Section 2</a></li>
+                <li><a href="#section3">Section 3</a></li>
+            </ul>
+        </div>
+        
+        <!-- Code Block for Copying
+        <pre class="code"  data-lang="R"><button class="copy-button" aria-label="Copy to clipboard">📋</button><code class="block"><script type="text/plain">
+        </script></code></pre>
+        -->
+
+        <h2> Introduction</h2>
+            <p>
+            For no particular reason, I decided to get into photography in the fall of 2022. Since then, I've taken over 20,000
+            pictures and videos across nearly 3 years. Recently, I realized that I could access the EXIF data (metadata
+            created by the camera when each picture or video is taken) and use my Data Science experience to see what
+            I could learn from it.
+            </p>
+            <p>
+            As a Canon camera enthusiast, I use Canon's lenses with my EOS R8, which uses the Canon RF lens mount. A top
+            lens I used throughout the past several years was the the RF 24-105 F4L. This lens has great sharpness,
+            and allowed me to get both wide-angled and zoomed-in pictures in a wide variety of circumstances. In Semptember
+            of 2024, the RF 28-70 F2.8 was released by Canon. This lens, although it had a smalller zoom range, is able to
+            perform better in low-light situations, as well as give more subject separation, which means the background blurs
+            out more, isolating the subject. Both of these are desireable aspects of photography.
+            </p>
+            <p>
+            Because I found myself shooting video in low-light situations, and also wanted to transition more into 
+            portrait photography, (and as a budget-limited college student,) trading out the RF 24-105 F4 for the
+            RF 28-70 F2.8 seemed like an appealing idea. I would get 1 stop more of light (f4 → f2.8) at the cost of
+            the 24mm - 27mm and 71mm - 105mm ranges. I realized this data could help me answer this question:
+            </p>
+            <p><i><b>Was it in my best interest to trade out my 24-105 f4L for the 28-70 2.8?</b></i></p>
+            <p>
+            After my analysis, I sold my 24-105 and purchased a 28-70. I found that the trade off wasn't worth it,
+            but not for the reasons I initially thought. Let's take a look at the data. I'll show you my reasoning,
+            explain my situation, and walk you through my experience with the lenses.
+            </p>
+        <h2> Extraction</h2>
+        <p> Data was extracted using a powershell script that would call Exiftool, a free tool for extracting image
+        metadata. I initially tried using the tool to extract the exif data without a powershell script, but the script
+        would stall randomly. It seemed to be doing this because it would hit a memory cap for parsing the exif data, so
+        I used a powershell to run Exiftool on each subdirectory, then write the results to a csv before moving on.
+        The workaround was successful. Here's the powershell script:</p>
+        
+        <pre class="code"  data-lang="PS1"><button class="code-toggle" aria-label="Toggle code">test</button><button class="copy-button" aria-label="Copy to clipboard">📋</button><code class="block"><script type="text/plain">
+        # Output CSV path
+        $output = "D:\Documents\_Misc\exif_metadata.csv"
+        $first = $true
+
+        # Get all subdirectories recursively
+        Get-ChildItem -Path "D:\Photography\_CAMERA SORTED" -Directory -Recurse | ForEach-Object {
+            $dir = $_.FullName
+
+            # Count matching files in this folder only
+            $filesInDir = Get-ChildItem -Path $dir -Include *.jpg,*.jpeg -File
+            $count = $filesInDir.Count
+
+            Write-Host "`n---"
+            Write-Host "Folder: $dir"
+            Write-Host "Found $count JPG/JPEG files"
+
+            if ($count -eq 0) { return }
+
+            if ($first) {
+                # First folder: include header
+                exiftool -csv -common -Lens "$dir" | Out-File -Encoding utf8 -FilePath $output
+                $first = $false
+            } else {
+                # Skip header from additional folders
+                exiftool -csv -common -Lens "$dir" | Select-Object -Skip 1 | Out-File -Encoding utf8 -FilePath $output -Append
+            }
+        }
+        </script></code></pre>
+        
+        
+        
+        <p>With data extracted, I was ready to investigate.</p>
+        
+        <h2> Wrangling</h2>
+        
+        <p>I decided to use R for this project. There were several goals with wrangling the data:</p>
+        
+        <ol>
+            <li>Isolate the shots to just my R8. I had previously shot with the m50 ii, so those files were intermixed.</li>
+            <li>Clean up information problems related to manual lenses. Manual lenses are vintage lenses that don't have
+            electronics to communicate to the camera. This can introduce non-numeric or unexpected inputs where there
+            otherwise wouldn't be any.</li>
+            <li>Standardize certain parameters like file size to just be MB instead of kb and MB.</li>
+            <li>Remove 'garbage' shots, for example, pictures with ISO past 25600, which would only be taken for testing purposes.</li>
+            <li>Reformat alphanumeric fields to just numeric to make them easier to work with.</li>
+        </ol>
+        
+        <p> Here's the R code for that:</p>
+        <pre class="code"  data-lang="R"><button class="copy-button" aria-label="Copy to clipboard">📋</button><code class="block"><script type="text/plain">
+            pacman::p_load(tidyverse, dplyr, car, readr, purrr, broom, pander,
+                           lubridate, vroom, plotly, htmlwidgets, forcats)
+
+            df <- read_csv("exif_metadata.csv")
+
+            df <- df %>%
+              mutate(Lens = ifelse(is.na(Lens) | Lens == "0.0 mm", "Unspecified Manual Lens", Lens))
+
+            df_clean <- df %>%
+              filter(!if_any(everything(), ~ .x %in% c("undef", "Inf")))
+
+            df_clean <- df_clean %>%
+              mutate(Aperture = if_else(Lens == "Unspecified Manual Lens", "manual aperture", as.character(Aperture)))
+
+            df_clean$Flash <- NULL
+
+            df_clean <- df_clean %>%
+              mutate(FileSizeMB = case_when(
+                str_detect(FileSize, "MB") ~ as.numeric(str_remove(FileSize, " MB")),
+                str_detect(FileSize, "kB") ~ as.numeric(str_remove(FileSize, " kB")) / 1024,
+                TRUE ~ NA_real_
+              ))
+
+            df_mp4 <- df_clean %>%
+              filter(str_to_lower(str_sub(FileName, -4)) == ".MP4")
+
+            df_clean <- anti_join(df_clean, df_mp4)
+
+            weird_df <- filter(df_clean, ISO > 25600)
+            df_clean <- anti_join(df_clean, weird_df)
+
+            df_R8 <- df_clean %>% filter(Model == "Canon EOS R8")
+            
+            parse_shutter <- function(x) {
+              if (is.na(x) || x == "" || x == "undef") return(NA_real_)
+              if (str_detect(x, "/")) {
+                parts <- str_split(x, "/", simplify = TRUE)
+                if (ncol(parts) == 2 && all(parts != "")) {
+                  return(as.numeric(parts[1]) / as.numeric(parts[2]))
+                }
+              }
+              return(suppressWarnings(as.numeric(x)))
+            }
+
+            df_R8 <- df_R8 %>% mutate(ShutterSpeedSec = map_dbl(ShutterSpeed, parse_shutter))
+
+        </script></code></pre>
+        
+        <p>This next piece of code filters out large file sizes and videos. It's helpful for one chart which we will
+        see shortly, but otherwise I didn't run it for the output of the other graphs that you'll see.
+        </p>
+        <p>Initially, I filtered out videos and large files using this next chunk, but in hindsight I'm not really sure
+        why I did this- I wanted to focus on video as much if not more than photo, so filtering out videos could have potentially
+        skewed my findings. Comparing video + picture to picture only, my findings in all charts looked nearly identical.
+        So, in the long run it didn't make a difference but it had the potential to.</p>
+        
+        <pre class="code"  data-lang="R"><button class="copy-button" aria-label="Copy to clipboard">📋</button><code class="block"><script type="text/plain">
+        # Filter out large files and videos
+        df_mp4 <- df_clean %>%
+          filter(str_to_lower(str_sub(FileName, -4)) == ".MP4")
+        df_clean <- anti_join(df_clean, df_mp4)
+
+        big_files_R8 <- filter(df_R8, FileSizeMB > 20)
+        df_R8 <- anti_join(df_R8, big_files_R8)
+        </script></code></pre>
+        
+        <p>Let's see how many pictures and videos we took:</p>
+        
+        <pre class="code"  data-lang="R"><button class="copy-button" aria-label="Copy to clipboard">📋</button><code class="block"><script type="text/plain">
+        nrow(df_R8)
+        </script></code></pre>
+        
+        <pre class="pre-output"><code class="output">[1] 23126</code></pre>
+        
+        <p> That's a lot of data. With the data cleaned and formatted, we can now create some visuals.</p>
+        
+        <h2>Analysis</h2>
+        
+        <p> Data was graphed in ggplot, then converted using ggplotly to plotly so the charts could be exported in a
+        standalone format.</p>
+        
+        <h3>File Sizes</h3>
+        
+        <p>Let's take a look at file sizes:</p> 
+      
+        <pre class="code"  data-lang="R"><button class="copy-button" aria-label="Copy to clipboard">📋</button><code class="block"><script type="text/plain">
+        p1 <- ggplot(df_R8, aes(x = FileSizeMB)) +
+          geom_density(fill = "darkgreen", alpha = 0.5) +
+          labs(title = "File Size Density", x = "File Size (MB)", y = "Density") +
+          theme_minimal()
+        p1_plotly <- plotly::ggplotly(p1)
+        p1_plotly
+        </script></code></pre>
+      
+        <iframe title="File Size Percent Density" src="post2-assets/File_Size_Percent_Density.html" class="plot-frame"></iframe>
+        
+        <p class="plot-above plot-below"> The massive spike we see on the left is all the pictures, and everything to the right is essentially videos,
+        except for the 1 or 2 90MB RAW picture files I found (-I still don't know why they took up that much data). This
+        is where that code chunk earlier came in handy. We can use it to just look at the files sizes of the pictures:</p>
+        
+        <iframe title="File Size Percent Density 2" src="post2-assets/File_Size_Percent_Density2.html" class="plot-frame"></iframe>
+        <iframe title="Focal Length Binned" src="post2-assets/Focal_Length_Binned.html" class="plot-frame"></iframe>
+        <iframe title="Focal Length 24-105" src="post2-assets/Focal_Length_24_105.html" class="plot-frame"></iframe>
+        <iframe title="Shutter Speed Usage" src="post2-assets/Shutter_Speed_Usage.html" class="plot-frame"></iframe>
+        <iframe title="Aperture Usage" src="post2-assets/Aperture_Usage.html" class="plot-frame"></iframe>
+        <iframe title="ISO Usage" src="post2-assets/ISO_Usage.html" class="plot-frame"></iframe>
+        <iframe title="Lens Usage" src="post2-assets/Lens_Usage.html" class="plot-frame"></iframe>
+        <iframe title="Aperture 24-105" src="post2-assets/Aperture_24_105.html" class="plot-frame"></iframe>
+        <iframe title="Lens Usage Over Time" src="post2-assets/Lens_Usage_Over_Time.html" class="plot-frame"></iframe>
+
+        <pre class="code"  data-lang="R"><button class="copy-button" aria-label="Copy to clipboard">📋</button><code class="block"><script type="text/plain">
+        
+        p2 <- df_R8 %>%
+          count(FocalLength) %>%
+          mutate(
+            FocalLengthClean = as.numeric(str_remove(FocalLength, " mm")),
+            FocalLengthGroup = case_when(
+              FocalLengthClean == 24 ~ "24",
+              TRUE ~ paste0(floor(FocalLengthClean / 5) * 5, "-", floor(FocalLengthClean / 5) * 5 + 4)
+            )
+          ) %>%
+          group_by(FocalLengthGroup) %>%
+          summarise(n = sum(n), .groups = "drop") %>%
+          mutate(
+            FocalLengthGroupNum = as.numeric(str_extract(FocalLengthGroup, "^\\d+")),
+            FocalLengthGroup = fct_reorder(FocalLengthGroup, FocalLengthGroupNum)
+          ) %>%
+          ggplot(aes(x = FocalLengthGroup, y = n)) +
+          geom_bar(stat = "identity", fill = "blue3") +
+          coord_flip() +
+          labs(title = "Binned Focal Length Usage (24mm Separate)", x = "Focal Length Group", y = "Count") +
+          theme_minimal()
+        p2_plotly <- plotly::ggplotly(p2)
+        p2_plotly
+        </script></code></pre>
+        
+        <pre class="code"  data-lang="R"><button class="copy-button" aria-label="Copy to clipboard">📋</button><code class="block"><script type="text/plain">
+        p3 <- df_R8 %>%
+          filter(str_detect(Lens, "24.0 - 105.0 mm")) %>%
+          count(FocalLength) %>%
+          mutate(
+            FocalLengthClean = as.numeric(str_remove(FocalLength, " mm")),
+            FocalLengthGroup = case_when(
+              FocalLengthClean == 24 ~ "24",
+              TRUE ~ paste0(floor(FocalLengthClean / 5) * 5, "-", floor(FocalLengthClean / 5) * 5 + 4)
+            )
+          ) %>%
+          group_by(FocalLengthGroup) %>%
+          summarise(n = sum(n), .groups = "drop") %>%
+          mutate(
+            FocalLengthGroupNum = as.numeric(str_extract(FocalLengthGroup, "^\\d+")),
+            FocalLengthGroup = fct_reorder(FocalLengthGroup, FocalLengthGroupNum)
+          ) %>%
+          ggplot(aes(x = FocalLengthGroup, y = n)) +
+          geom_bar(stat = "identity", fill = "cyan2") +
+          coord_flip() +
+          labs(title = "Focal Length Usage (24–105mm Lens Only)", x = "Focal Length Group", y = "Count") +
+          theme_minimal()
+        p3_plotly <- plotly::ggplotly(p3)
+        p3_plotly
+        </script></code></pre>
+        
+        <pre class="code"  data-lang="R"><button class="copy-button" aria-label="Copy to clipboard">📋</button><code class="block"><script type="text/plain">
+        p4 <- df_R8 %>%
+          count(ShutterSpeed, ShutterSpeedSec) %>%
+          mutate(ShutterSpeed = fct_reorder(ShutterSpeed, ShutterSpeedSec)) %>%
+          ggplot(aes(x = ShutterSpeed, y = n)) +
+          geom_bar(stat = "identity", fill = "orchid") +
+          coord_flip() +
+          labs(title = "Shutter Speed Usage", x = "Shutter Speed", y = "Count") +
+          theme_minimal()
+        p4_plotly <- plotly::ggplotly(p4)
+        p4_plotly
+        </script></code></pre>
+        
+        <pre class="code"  data-lang="R"><button class="copy-button" aria-label="Copy to clipboard">📋</button><code class="block"><script type="text/plain">
+        p5 <- df_R8 %>%
+          count(Aperture) %>%
+          mutate(Aperture_num = as.numeric(as.character(Aperture))) %>%
+          ggplot(aes(x = fct_reorder(Aperture, Aperture_num), y = n)) +
+          geom_bar(stat = "identity", fill = "orange") +
+          labs(title = "Aperture Usage", x = "Aperture (f-stop)", y = "Count") +
+          theme_minimal()
+        p5_plotly <- plotly::ggplotly(p5)
+        p5_plotly
+        </script></code></pre>
+        
+        <pre class="code"  data-lang="R"><button class="copy-button" aria-label="Copy to clipboard">📋</button><code class="block"><script type="text/plain">
+        p6 <- df_R8 %>%
+          count(ISO) %>%
+          mutate(ISO_char = as.character(ISO)) %>%
+          ggplot(aes(x = fct_reorder(ISO_char, as.numeric(ISO)), y = n)) +
+          geom_bar(stat = "identity", fill = "tomato") +
+          coord_flip() +
+          labs(title = "ISO Usage", x = "ISO", y = "Count") +
+          theme_minimal()
+        p6_plotly <- plotly::ggplotly(p6)
+        p6_plotly
+        </script></code></pre>
+        
+        <pre class="code"  data-lang="R"><button class="copy-button" aria-label="Copy to clipboard">📋</button><code class="block"><script type="text/plain">
+        p7 <- df %>%
+          filter(Model == "Canon EOS R8") %>%
+          count(Lens, sort = TRUE) %>%
+          ggplot(aes(x = fct_reorder(Lens, n), y = n)) +
+          geom_bar(stat = "identity", fill = "steelblue") +
+          coord_flip() +
+          labs(title = "Lens Usage", x = "Lens", y = "Count") +
+          theme_minimal()
+        p7_plotly <- plotly::ggplotly(p7)
+        p7_plotly
+        </script></code></pre>
+        
+        <pre class="code"  data-lang="R"><button class="copy-button" aria-label="Copy to clipboard">📋</button><code class="block"><script type="text/plain">
+        p8 <- df_R8 %>%
+          filter(str_detect(Lens, "24.0 - 105.0 mm")) %>%
+          count(Aperture) %>%
+          mutate(
+            ApertureNum = as.numeric(str_remove(Aperture, " f/")),
+            ApertureBin = case_when(
+              is.na(ApertureNum) ~ "manual",
+              ApertureNum <= 4 ~ "≤ f/4",
+              ApertureNum <= 5.6 ~ "f/4.1–f/5.6",
+              ApertureNum <= 8 ~ "f/5.7–f/8",
+              ApertureNum <= 11 ~ "f/8.1–f/11",
+              ApertureNum <= 16 ~ "f/11.1–f/16",
+              TRUE ~ "> f/16"
+            )
+          ) %>%
+          group_by(ApertureBin) %>%
+          summarise(n = sum(n), .groups = "drop") %>%
+          mutate(ApertureBin = factor(ApertureBin, levels = c("manual", "≤ f/4", "f/4.1–f/5.6", "f/5.7–f/8", "f/8.1–f/11", "f/11.1–f/16", "> f/16"))) %>%
+          ggplot(aes(x = ApertureBin, y = n)) +
+          geom_bar(stat = "identity", fill = "coral") +
+          labs(title = "Aperture Usage (24–105mm Lens)", x = "Aperture Range", y = "Count") +
+          theme_minimal()
+        p8_plotly <- plotly::ggplotly(p8)
+        p8_plotly
+        </script></code></pre>
+        
+        <pre class="code"  data-lang="R"><button class="copy-button" aria-label="Copy to clipboard">📋</button><code class="block"><script type="text/plain">
+        p9 <- df_R8 %>%
+          mutate(Date = parse_date_time(DateTimeOriginal, orders = c("Ymd HMS", "Ymd HM", "Ymd"))) %>%
+          count(Lens, Month = floor_date(Date, "month")) %>%
+          ggplot(aes(x = Month, y = n, color = Lens)) +
+          geom_line(linewidth = 1.2) +
+          labs(title = "Lens Usage Over Time", x = "Month", y = "Count") +
+          theme_minimal()
+        p9_plotly <- plotly::ggplotly(p9)
+        p9_plotly
+        </script></code></pre>
+        
+        
+        <h2> What the Data Doesn't Tell You</h2>
+            <p>There were several assumptions I had made when choosing the 28-70.
+            I had assumed that the lens would be the same sharpness. In my testing, it seemed it wasn't as sharp. Various
+            tests online showed that the 28-70 2.8 had inconsistencies in manufacturing quality that made some lenses
+            less sharp than others. Although I didn't have access to high quality tools for testing, or other lenses
+            for comparison, I had a gut feeling that the len wasn't as sharp as it could be, or as online tests had shown.
+            </p>
+            <p>
+            Size, zoom range problems. 2.8 not that big of a difference.
+            Bokeh quality more important than separation, and 2.8 was 'busy.' Which meant both 'lively' and 'distracting'.
+            I took out bigger file sizes to just focus on pictures and videos, but the 24-105 was what I had used primarily
+            for videos, so it skewed my analysis.
+            </p>
+        
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Ben Jacobs</p>
+        <p class="light-text"><i> Made with vanilla html/css/js and love by Ben </i></p>
+    </footer>
+    <button id="jump-to-top-button" title="Go to top"></button>
+
+    <script src="scripts.js"></script>
+    
+    <script>
+      fetch('post2-assets/Aperture_24_105.html')
+            .then(res => res.text())
+            .then(html => {
+            document.getElementById('Aperture_24_105.html').innerHTML = html; });
+    </script>
+
+</body>
+</html>
