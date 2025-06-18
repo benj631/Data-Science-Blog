@@ -46,6 +46,14 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: "Monaspace Neon";
+    src: url("fonts/MonaspaceNeon-Regular.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 .light-text {
     font-weight: 300;
 }
@@ -79,6 +87,8 @@ html {
     --current: #000000 --button-color: #888888;
 
     --highlighted-text: #ffcf33;
+
+    --border-highlight-color: #000000;
 }
 
 /* Dark Mode */
@@ -101,6 +111,8 @@ html {
     --current: #f2f2f2 --button-color: #ffffff;
 
     --highlighted-text: #2c8ba8;
+
+    --border-highlight-color: #ffffff;
 }
 
 /* Adjust Default Link Styling */
@@ -371,7 +383,7 @@ main {
         background-color 0.3s ease,
         transform 0.2s ease;
     box-shadow: 0 2px 5px var(--theme-toggle-shadow);
-    margin-top: .4em;
+    margin-top: 0.4em;
     margin-bottom: 5px;
 }
 
@@ -487,6 +499,12 @@ main h2.main_section_title {
     text-align: center;
 }
 
+
+main ol{
+
+    margin-top:0;
+}
+
 main ul {
     padding: 0;
     margin: 0, 0, 0, 0;
@@ -497,12 +515,13 @@ main ul ul {
     padding-left: 1.6em;
 }
 
-main ul li {
+main ul li, main ol li {
     padding: 0;
-    padding-top: 0.8em;
+    padding-top: 0.6em;
     padding-bottom: 0.1em;
     list-style: disc;
 }
+
 
 main ul li ul li {
     /* Nested Lists */
@@ -518,6 +537,23 @@ main ul li ul li:before {
     position: relative;
     left: -1px;
 }
+
+/* PLotly */
+iframe.plot-frame {
+  width: 100%;
+  aspect-ratio: 1.4 / 1; /* Very important. */
+  border: none;
+}
+
+/* Spacing when there's a chart above. */
+p.plot-above {
+    margin-top:1.75em;
+}
+
+p.plot-below {
+    margin-bottom:1.75em;
+}
+
 
 div.table-wrapper {
     width: 100%;
@@ -565,20 +601,160 @@ li p {
     padding-bottom: 1em;
 }
 
-/* Footer Styling */
+/* Code Block Styling */
 
+pre.code {
+    position: relative;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 12px;
+    border-color: var(--border-highlight-color);
+    background-color: var(--bg-color-alt1);
+    color: var(--text-color);
+    width: 100%;
+
+    overflow-x: auto; /* Enables horizontal scrolling */
+    white-space: pre; /* Preserves formatting and disables line breaks */
+}
+
+pre.code code.block {
+    display: block; /* Keep it contained and measured */
+    font-family: "Monaspace Neon", monospace;
+    font-size: 1em;
+    white-space: pre; /* Ensures no wrapping */
+    word-break: normal; /* Prevents word splitting */
+    background-color: var(--bg-color-alt1);
+    color: var(--text-color);
+    text-align: left;
+    
+    margin: 0.5em 0;
+    padding: 0 .75em;
+}
+
+pre.code::before {
+    content: "{" attr(data-lang) "}";
+    position: absolute;
+    top: 0.3em;
+    right: 0.3em;
+    font-size: 1em;
+    padding: 0.2em 0.5em;
+    background-color: var(--bg-color-alt1);
+    color: var(--text-color);
+    border-bottom-right-radius: 6px;
+    opacity: 1;
+    text-shadow:
+        1px 1px 3px var(--bg-color),
+        0 0 6px var(--bg-color);
+    pointer-events: none;
+}
+
+button.code-toggle{
+    display:none;
+}
+
+.code-extra {
+  display: none;
+}
+
+/* Individual code lines (inserted via JS) */
+.code-line {
+    font-family: "Monaspace Neon", monospace;
+    font-size: 1em;
+    line-height: 1.5em; /* Actually needed. Other code adjusts to this.*/
+    margin-right: 0;
+    text-indent: none;
+}
+
+/* Line numbers — tighter left alignment and theme-based color */
+.line-number {
+    display: inline-block;
+    width: 1.8em; /* narrower line number column */
+    margin-right: .5em; /* less spacing between line number and code */
+    padding-right: 0.6em; /* space between line and code */
+    text-align: right;
+    opacity: 0.6;
+    border-right: 1px solid var(--separator-color);
+    color: var(--separator-color); /* theme-aware faded color */
+    user-select: none;
+}
+
+/* Show button on hover */
+pre.code {
+  position: relative;
+}
+
+/* The actual button that replaces ::after */
+.copy-button {
+  position: absolute;
+  bottom: 0.4em;
+  right: 0.6em;
+  font-size: 1em;
+  background-color: var(--bg-color-alt1);
+  border: 1px solid var(--separator-color);
+  padding: 0.3em 0.4em;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Only show button when hovering pre block */
+pre.code:hover .copy-button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Copied! state */
+.copy-button.copied {
+  font-size: 0.75em;
+  animation: fadeOutCopied 3s forwards;
+  pointer-events: none;
+}
+
+/* Fade-out animation */
+@keyframes fadeOutCopied {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+pre.pre-output {
+  background-color: var(--bg-color-alt1, #f0f0f0);
+  border-left: 4px solid var(--border-highlight-color, #999);
+  padding: 0.5em 1em;
+  font-family: var(--code-font, monospace);
+  white-space: pre-wrap;
+  margin: 0.5em 0 1em;
+}
+
+code.output {
+  font-size: 0.95em;
+  color: var(--text-color, #222);
+}
+
+/* Footer Styling */
 div#footer_spacer {
-    margin-top:10em;
+    margin-top: 10em;
 }
 
 footer {
     text-align: center;
     padding: 0;
-    margin:0;
+    margin: 0;
     padding-top: 10px;
     padding-bottom: 10px;
 
-    
     font-size: 0.9em;
 }
 
@@ -587,6 +763,7 @@ footer p {
     margin: 0;
 }
 
+/* jumpt to top button styling */
 #jump-to-top-button {
     width: 0.5em;
     height: 0.5em;

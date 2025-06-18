@@ -81,19 +81,101 @@ function tocShutOnSelectLink() {
 
 function setScrollToTopButtonAppearOnScrollDown() {
     document.addEventListener("DOMContentLoaded", function () {
-    const button = document.getElementById("jump-to-top-button");
+        const button = document.getElementById("jump-to-top-button");
 
-    window.addEventListener("scroll", function () {
-        if (window.scrollY > 300) {
-          button.style.display = "block";
-        } else {
-          button.style.display = "none";
+        window.addEventListener("scroll", function () {
+            if (window.scrollY > 300) {
+                button.style.display = "block";
+            } else {
+                button.style.display = "none";
+            }
+        });
+
+        button.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    });
+}
+
+function dedentCodeBlocks() {
+    document.querySelectorAll('code.block > script[type="text/plain"]').forEach((script) => {
+        const code = script.parentElement;
+        const raw = script.textContent;
+        const lines = raw.split("\n");
+
+        // Remove leading/trailing empty lines
+        while (lines[0]?.trim() === "") lines.shift();
+        while (lines[lines.length - 1]?.trim() === "") lines.pop();
+
+        // Find smallest indent across non-empty lines
+        const indentLengths = lines.filter((line) => line.trim() !== "").map((line) => line.match(/^[\t ]*/)[0].length);
+        const minIndent = Math.min(...indentLengths);
+
+        // Remove the common indent from each line
+        const cleaned = lines.map((line) => line.slice(minIndent)).join("\n");
+
+        script.remove();
+        code.textContent = cleaned;
+    });
+}
+
+function injectLineNumbers() {
+    document.querySelectorAll("pre.code code.block").forEach((code) => {
+        const pre = code.closest("pre.code");
+        if (!pre) return;
+
+        // Store original code if not already saved
+        if (!pre.dataset.rawCode) {
+            pre.dataset.rawCode = code.textContent.trimEnd();
         }
-      });
 
-      button.addEventListener("click", function () {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
+        // Inject line numbers
+        const lines = pre.dataset.rawCode.split("\n");
+        code.innerHTML = lines
+            .map((line, i) => `<span class="code-line"><span class="line-number">${i + 1}.</span> ${line}</span>`)
+            .join("\n");
+    });
+}
+
+function setupCodeClipboard() {
+    document.querySelectorAll("pre.code").forEach((pre) => {
+        const button = pre.querySelector(".copy-button");
+        const raw = pre.dataset.rawCode;
+
+        if (!button || !raw) return;
+
+        const originalContent = button.innerHTML;
+
+        // Block focus *before* it happens (more reliable than blur)
+        button.addEventListener("pointerdown", (e) => e.preventDefault());
+
+        button.addEventListener("click", () => {
+            navigator.clipboard.writeText(raw).then(() => {
+                button.innerText = "Copied!";
+                setTimeout(() => {
+                    button.innerHTML = originalContent;
+                }, 3000);
+            });
+        });
+    });
+}
+
+/* Really does nothing. */
+function preventAutoScrollOnClick() {
+    button.addEventListener("click", () => {
+        // Prevent scroll from focus
+        button.blur();
+
+        navigator.clipboard.writeText(raw).then(() => {
+            const originalContent = button.innerHTML;
+            button.textContent = "Copied!";
+            button.classList.add("copied");
+
+            setTimeout(() => {
+                button.innerHTML = originalContent;
+                button.classList.remove("copied");
+            }, 3000);
+        });
     });
 }
 
@@ -101,7 +183,15 @@ function main() {
     themeToggle();
     tocToggle();
     tocShutOnSelectLink();
+    dedentCodeBlocks();
+
+    injectLineNumbers();
+    setupCodeClipboard();
+
     setScrollToTopButtonAppearOnScrollDown();
+
+    preventAutoScrollOnClick();
+    setupCodeToggles();
 }
 
 main();
