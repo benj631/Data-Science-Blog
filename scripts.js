@@ -1,3 +1,18 @@
+// scripts.js - 2025
+
+function setupScrollFadeGradient(selector = ".gradient") {
+    const gradient = document.querySelector(selector);
+    if (!gradient) return;
+
+    function updateOpacity() {
+        const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+        gradient.style.opacity = 1 - 35 * scrollPercent; // fade out as you scroll down
+    }
+
+    window.addEventListener("scroll", updateOpacity);
+    updateOpacity(); // initialize on load
+}
+
 function themeToggle() {
     document.addEventListener("DOMContentLoaded", () => {
         const button = document.getElementById("theme-toggle");
@@ -160,26 +175,153 @@ function setupCodeClipboard() {
     });
 }
 
-/* Really does nothing. */
-function preventAutoScrollOnClick() {
-    button.addEventListener("click", () => {
-        // Prevent scroll from focus
-        button.blur();
+function initializeTabs() {
+    const tabButtons = document.querySelectorAll(".tab-button");
+    const tabContents = document.querySelectorAll(".tab-content");
 
-        navigator.clipboard.writeText(raw).then(() => {
-            const originalContent = button.innerHTML;
-            button.textContent = "Copied!";
-            button.classList.add("copied");
+    tabButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const targetId = button.dataset.tab;
 
-            setTimeout(() => {
-                button.innerHTML = originalContent;
-                button.classList.remove("copied");
-            }, 3000);
+            // Remove active classes from all buttons and content
+            tabButtons.forEach((btn) => btn.classList.remove("tab-button-active"));
+            tabContents.forEach((content) => content.classList.remove("tab-content-active"));
+
+            // Activate clicked button and corresponding content
+            button.classList.add("tab-button-active");
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) targetContent.classList.add("tab-content-active");
+        });
+    });
+}
+
+function setupCopyButtons() {
+    document.querySelectorAll("pre.code").forEach((pre) => {
+        const button = pre.querySelector(".copy-button");
+        const code = pre.querySelector("code.block");
+
+        if (!button || !code) return;
+
+        // Store raw code text
+        if (!pre.dataset.rawCode) pre.dataset.rawCode = code.textContent.trimEnd();
+
+        const raw = pre.dataset.rawCode;
+        const originalContent = button.innerHTML;
+
+        // Prevent focus on mouse down
+        button.addEventListener("pointerdown", (e) => e.preventDefault());
+
+        button.addEventListener("click", () => {
+            // Copy code to clipboard
+            navigator.clipboard.writeText(raw).then(() => {
+                button.innerText = "Copied!";
+                setTimeout(() => (button.innerHTML = originalContent), 3000);
+            });
+
+            // Remove focus immediately to prevent scrolling
+            button.blur();
+        });
+    });
+}
+
+function enableImageViewer() {
+    document.querySelectorAll("img.viewable").forEach((img) => {
+        img.style.cursor = "zoom-in";
+
+        img.addEventListener("click", () => {
+            // Find caption
+            let captionText = "";
+            const figure = img.closest("figure");
+            if (figure) {
+                const figcap = figure.querySelector("figcaption");
+                if (figcap) captionText = figcap.textContent.trim();
+            }
+            if (!captionText) captionText = img.getAttribute("data-caption") || img.alt || "";
+
+            // Overlay
+            const overlay = document.createElement("div");
+            overlay.id = "image-viewer-overlay";
+
+            // Viewer container
+            const viewer = document.createElement("div");
+            viewer.id = "image-viewer";
+
+            // Large image
+            const largeImg = document.createElement("img");
+            largeImg.src = img.src;
+            largeImg.id = "image-viewer-img";
+
+            // Caption
+            if (captionText) {
+                const caption = document.createElement("div");
+                caption.id = "image-caption";
+                caption.textContent = captionText;
+                viewer.appendChild(caption);
+            }
+
+            viewer.appendChild(largeImg);
+            overlay.appendChild(viewer);
+            document.body.appendChild(overlay);
+
+            // Scroll-to-zoom (zoom toward cursor)
+            let scale = 1;
+            let translateX = 0;
+            let translateY = 0;
+
+            largeImg.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+            let isDragging = false;
+            let lastX, lastY;
+
+            viewer.addEventListener("wheel", (e) => {
+                e.preventDefault();
+
+                const rect = largeImg.getBoundingClientRect();
+                const offsetX = e.clientX - rect.left;
+                const offsetY = e.clientY - rect.top;
+                const percentX = (offsetX / rect.width) * 100;
+                const percentY = (offsetY / rect.height) * 100;
+
+                largeImg.style.transformOrigin = `${percentX}% ${percentY}%`;
+
+                const delta = e.deltaY < 0 ? 1.1 : 0.9;
+                scale = Math.min(Math.max(0.5, scale * delta), 5);
+
+                largeImg.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+            });
+
+            // Drag-to-pan
+            largeImg.addEventListener("mousedown", (e) => {
+                if (scale <= 1) return;
+                isDragging = true;
+                lastX = e.clientX;
+                lastY = e.clientY;
+                largeImg.style.cursor = "grabbing";
+            });
+
+            window.addEventListener("mousemove", (e) => {
+                if (!isDragging) return;
+                const dx = (e.clientX - lastX) / scale;
+                const dy = (e.clientY - lastY) / scale;
+                translateX += dx;
+                translateY += dy;
+                lastX = e.clientX;
+                lastY = e.clientY;
+                largeImg.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+            });
+
+            window.addEventListener("mouseup", () => {
+                isDragging = false;
+                largeImg.style.cursor = "grab";
+            });
+
+            // Click overlay to close
+            overlay.addEventListener("click", () => overlay.remove());
         });
     });
 }
 
 function main() {
+    setupScrollFadeGradient();
     themeToggle();
     tocToggle();
     tocShutOnSelectLink();
@@ -190,8 +332,9 @@ function main() {
 
     setScrollToTopButtonAppearOnScrollDown();
 
-    preventAutoScrollOnClick();
-    setupCodeToggles();
+    setupCopyButtons();
+    initializeTabs();
+    enableImageViewer();
 }
 
 main();
