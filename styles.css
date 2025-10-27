@@ -74,8 +74,13 @@ html {
     --bg-color-alt1: #f0f0f0;
     --text-color: #000000;
 
+    --mid-color: #9ea2a6;
+    --opposite-color: #000000;
+
     --link-color: #3d4141;
     --link-hover: #0d122b;
+
+    --text-shadow: 0.05em 0.05em 0.1em rgba(256, 256, 256, 0.75);
 
     --theme-toggle-bg-color: #ffffff;
     --theme-toggle-shadow: rgba(0, 0, 0, 0.5);
@@ -84,7 +89,8 @@ html {
     --separator-color: rgba(0, 0, 0, 0.3); /* Light mode separator */
     --visited-link-color: #0d122b;
 
-    --current: #000000 --button-color: #888888;
+    --current: #000000;
+    --button-color: #f4f4f4;
 
     --highlighted-text: #ffcf33;
 
@@ -96,10 +102,15 @@ html {
 .dark-mode {
     --bg-color: rgb(19, 20, 24);
     --bg-color-alt1: #39393f;
-    --text-color: #eaeaea;
+    --text-color: #f1f1f1;
+
+    --mid-color: #a4aaaa;
+    --opposite-color: #f6f6f6;
 
     --link-color: #b6b6b6;
     --link-hover: #ffffff;
+
+    --text-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.75);
 
     --theme-toggle-bg-color: #000000;
     --theme-toggle-shadow: rgba(255, 255, 255, 0.3);
@@ -108,7 +119,8 @@ html {
     --separator-color: rgba(255, 255, 255, 0.3); /* Dark mode separator */
     --visited-link-color: #eaeaea;
 
-    --current: #f2f2f2 --button-color: #ffffff;
+    --current: #f2f2f2;
+    --button-color: #191919;
 
     --highlighted-text: #2c8ba8;
 
@@ -156,10 +168,9 @@ a:hover {
 
 html,
 body {
-    height: 100%;
     margin: 0;
-    display: flex;
-    flex-direction: column;
+    height: auto;
+    display: block; /* Remove flex here */
 }
 
 body {
@@ -189,7 +200,7 @@ main {
     }
 
     main {
-        max-width: 40vw;
+        max-width: 76vw;
     }
 
     nav,
@@ -214,6 +225,53 @@ main {
     html body #jump-to-top-button {
         padding: 1em 1em;
     }
+
+    /* Left pane becomes top section */
+    /* Left pane: remove fixed positioning, full width */
+    aside.resume-left {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        padding: 1.5em;
+        background-color: var(--dark-bg, #111);
+        box-sizing: border-box;
+    }
+
+    /* Divider: switch from vertical to horizontal */
+    div.resume-divider {
+        position: relative;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 2px;
+        background-color: white;
+        margin: 1rem 0;
+    }
+
+    /* Right pane: reset layout and margin */
+    section.resume-right {
+        position: relative;
+        width: 100%;
+        margin-left: 0;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+}
+
+div.gradient {
+    position: fixed;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 125, 45, 0.95) 0%,
+        /* sunset orange */ rgba(255, 42, 104, 0.95) 30%,
+        /* pinkish */ rgba(102, 51, 153, 0.95) 60%,
+        /* purple */ rgba(42, 22, 217, 0.85) 80%,
+        /* blue */ rgba(0, 0, 50, 0.85) 100% /* deep night */
+    );
+    width: 100%;
+    height: 100%;
+    z-index: -1;
 }
 
 nav {
@@ -293,12 +351,65 @@ header {
     padding: 20px 0;
 }
 
+/* Home Only */
 .header-spacer {
     height: 3.4em;
 }
 
+/* Image Viewer Styling */
+
+img.viewable {
+    cursor: zoom-in;
+    transition: transform 0.2s ease;
+    border: 5px solid var(--opposite-color);
+}
+
+#image-viewer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 101;
+}
+
+#image-viewer {
+    position: relative;
+    display: inline-block; /* container fits the image exactly */
+    border: 8px solid white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    background: white;
+}
+
+#image-viewer img {
+    display: block;
+    max-width: 90vw; /* scale to fit most of the screen */
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+}
+
+#image-caption {
+    position: absolute; /* overlays on image */
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    font-size: 0.9em;
+    padding: 4px 8px;
+    border-top-left-radius: 4px;
+    z-index: 100;
+}
+
+/* End Image Viewer Styling*/
+
 #prof-pic {
     max-width: 200px;
+    border: 2px solid white;
 }
 
 img#profile-pic {
@@ -307,19 +418,62 @@ img#profile-pic {
     /* object-fit: cover; */ /* Ensures proper scaling */
     /* clip-path: inset(10% 10% 10% 10%); */ /* Crops edges */
     border-radius: 50%; /* Fully round */
+    border: 2px solid white;
 }
 
-#article_title {
+h1#main-title {
+    text-shadow: 3px 3px 2px var(--text-shadow);
+    font-size: 2.4em;
+    padding-top: 0.5em;
     padding-bottom: 0.5em;
 }
 
-header h1 {
-    font-size: 2.4em;
-    padding-top: 2em;
-    padding-bottom: 1em;
+p.main-subtitle {
+    text-align: center; /* centers the date */
+    padding-top: 1em;
 }
 
-header h2.index {
+.title-divider {
+    width: 90%; /* 80% of the container width */
+    height: 1px; /* 2px thick */
+    background-color: var(--separator-color); /* solid white line */
+    margin: 0 auto;
+    margin-top: 1em; /* vertical spacing + center horizontally */
+    margin-bottom: 1em;
+}
+
+/* Row of images */
+
+.image-row {
+    display: flex;
+    width: 75%;
+    margin: 0 auto;
+    justify-content: center;
+    gap: 1.5em;
+    align-items: flex-start; /* this is the key fix */
+    padding-top: 2.5em;
+    padding-bottom: 2.5em;
+}
+
+.image-row figure {
+    width: calc(50% - 5px);
+    margin: 0;
+}
+
+.image-row img {
+    width: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.image-row figcaption {
+    text-align: center;
+    font-size: 0.9em;
+    margin-top: 4px;
+}
+
+header h2.about-name-title {
+    /* Name title in about*/
     font-size: 1.8em;
 }
 
@@ -371,6 +525,13 @@ main {
 /* Table of Contents */
 
 /* Button */
+
+/* General Behavior Control */
+
+button:focus {
+    outline: none;
+}
+
 #toggle-toc {
     background-color: var(--button-color); /* Set default button color */
     color: var(--button-text-color); /* Set text color */
@@ -389,7 +550,20 @@ main {
 
 #toggle-toc:hover {
     background-color: var(--button-color); /* Darken button on hover */
-    transform: scale(1.05); /* Slightly increase size for hover effect */
+    animation: shiftRightBack 0.25s forwards;
+    /* transform: scale(1.05);  Slightly increase size for hover effect */
+}
+
+@keyframes shiftRightBack {
+    0% {
+        transform: translateX(0);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }
 
 #toggle-toc:focus {
@@ -499,10 +673,8 @@ main h2.main_section_title {
     text-align: center;
 }
 
-
-main ol{
-
-    margin-top:0;
+main ol {
+    margin-top: 0;
 }
 
 main ul {
@@ -515,13 +687,13 @@ main ul ul {
     padding-left: 1.6em;
 }
 
-main ul li, main ol li {
+main ul li,
+main ol li {
     padding: 0;
     padding-top: 0.6em;
     padding-bottom: 0.1em;
     list-style: disc;
 }
-
 
 main ul li ul li {
     /* Nested Lists */
@@ -538,22 +710,77 @@ main ul li ul li:before {
     left: -1px;
 }
 
+/* Tab System */
+
+.tab-container {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 2px solid var(--border-highlight-color);
+    margin-top: 2em; /* For now */
+    margin-bottom: 1em;
+    max-width: 100%;
+}
+
+.tab-button {
+    flex: 1; /* each tab grows equally */
+    text-align: center;
+    font-family: "Metropolis", sans-serif;
+    font-size: 0.85em;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-highlight-color);
+    border-bottom: none;
+    outline: none;
+    padding: 0.5em 0; /* vertical padding only */
+    margin: 0.1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 0px;
+    font-weight: bold;
+}
+
+.tab-button:hover {
+    background-color: var(--theme-toggle-hover);
+}
+
+.tab-button.tab-button-active {
+    background-color: var(--mid-color);
+    color: var(--text-color);
+    border-color: var(--opposite-color);
+    border-bottom: 2px solid var(--bg-color-alt1);
+    text-shadow: 1px 1px 5px var(--bg-color);
+}
+
+.tab-content {
+    display: none;
+    border: none;
+    border-left: 0.4em solid var(--border-highlight-color);
+    padding: 1em;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    max-width: 100%;
+}
+
+.tab-content.tab-content-active {
+    display: block;
+}
+
 /* PLotly */
 iframe.plot-frame {
-  width: 100%;
-  aspect-ratio: 1.4 / 1; /* Very important. */
-  border: none;
+    width: 51%;
+    aspect-ratio: 1.4 / 1; /* Very important. */
+    border: none;
 }
 
 /* Spacing when there's a chart above. */
 p.plot-above {
-    margin-top:1.75em;
+    margin-top: 1.75em;
 }
 
 p.plot-below {
-    margin-bottom:1.75em;
+    margin-bottom: 1.75em;
 }
-
 
 div.table-wrapper {
     width: 100%;
@@ -626,9 +853,9 @@ pre.code code.block {
     background-color: var(--bg-color-alt1);
     color: var(--text-color);
     text-align: left;
-    
+
     margin: 0.5em 0;
-    padding: 0 .75em;
+    padding: 0 0.75em;
 }
 
 pre.code::before {
@@ -648,12 +875,12 @@ pre.code::before {
     pointer-events: none;
 }
 
-button.code-toggle{
-    display:none;
+button.code-toggle {
+    display: none;
 }
 
 .code-extra {
-  display: none;
+    display: none;
 }
 
 /* Individual code lines (inserted via JS) */
@@ -669,7 +896,7 @@ button.code-toggle{
 .line-number {
     display: inline-block;
     width: 1.8em; /* narrower line number column */
-    margin-right: .5em; /* less spacing between line number and code */
+    margin-right: 0.5em; /* less spacing between line number and code */
     padding-right: 0.6em; /* space between line and code */
     text-align: right;
     opacity: 0.6;
@@ -680,67 +907,163 @@ button.code-toggle{
 
 /* Show button on hover */
 pre.code {
-  position: relative;
+    position: relative;
 }
 
 /* The actual button that replaces ::after */
 .copy-button {
-  position: absolute;
-  bottom: 0.4em;
-  right: 0.6em;
-  font-size: 1em;
-  background-color: var(--bg-color-alt1);
-  border: 1px solid var(--separator-color);
-  padding: 0.3em 0.4em;
-  border-radius: 4px;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  pointer-events: none;
-  z-index: 2;
+    position: absolute;
+    bottom: 0.4em;
+    right: 0.6em;
+    font-size: 1em;
+    background-color: var(--bg-color-alt1);
+    border: 1px solid var(--separator-color);
+    padding: 0.3em 0.4em;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+    z-index: 2;
 }
 
 /* Only show button when hovering pre block */
 pre.code:hover .copy-button {
-  opacity: 1;
-  pointer-events: auto;
+    opacity: 1;
+    pointer-events: auto;
 }
 
 /* Copied! state */
 .copy-button.copied {
-  font-size: 0.75em;
-  animation: fadeOutCopied 3s forwards;
-  pointer-events: none;
+    font-size: 0.75em;
+    animation: fadeOutCopied 3s forwards;
+    pointer-events: none;
 }
 
 /* Fade-out animation */
 @keyframes fadeOutCopied {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  80% {
-    opacity: 1;
-    transform: translateY(-2px);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    80% {
+        opacity: 1;
+        transform: translateY(-2px);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
 }
 
 pre.pre-output {
-  background-color: var(--bg-color-alt1, #f0f0f0);
-  border-left: 4px solid var(--border-highlight-color, #999);
-  padding: 0.5em 1em;
-  font-family: var(--code-font, monospace);
-  white-space: pre-wrap;
-  margin: 0.5em 0 1em;
+    background-color: var(--bg-color-alt1, #f0f0f0);
+    border-left: 4px solid var(--border-highlight-color, #999);
+    padding: 0.5em 1em;
+    font-family: var(--code-font, monospace);
+    white-space: pre-wrap;
+    margin: 0.5em 0 1em;
 }
 
 code.output {
-  font-size: 0.95em;
-  color: var(--text-color, #222);
+    font-size: 0.95em;
+    color: var(--text-color, #222);
+}
+
+/* Resume Styling */
+
+#profile-pic-container.resume {
+    display: flex;
+    justify-content: center; /* horizontal centering */
+    align-items: center; /* vertical centering (optional) */
+    width: 100%;
+    margin: 1.5em 0;
+}
+
+/* Profile image styling */
+#profile-pic.resume {
+    display: block;
+    border-radius: 50%;
+    border: 2px solid white;
+    max-width: 100%;
+    height: auto;
+}
+
+h2.resume-name-title {
+    text-align: center;
+    margin: 0.5em 0; /* optional spacing */
+}
+
+/* Left Pane */
+.resume-left {
+    width: 25%;
+    padding: 40px 20px;
+    background-color: var(--dark-bg, #111);
+    color: var(--light-text, #eee);
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0; /* anchors it to the very left side */
+    height: 100%;
+    overflow-y: auto;
+}
+
+.resume-left h3 {
+    margin-top: 1.5em;
+    border-bottom: 1px solid #555;
+    padding-bottom: 0.3em;
+}
+
+.resume-left ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.resume-left li {
+    margin-bottom: 0.4em;
+}
+
+/* Divider Line */
+.resume-divider {
+    position: fixed;
+    left: 25%;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background-color: white;
+    opacity: 0.6;
+    z-index: 10;
+}
+
+/* Right Pane */
+.resume-right {
+    width: 85%;
+    margin-left: 25%;
+    padding: 40px 60px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.resume-right h2 {
+    margin-top: 0;
+    border-bottom: 2px solid #666;
+    padding-bottom: 0.3em;
+}
+
+.resume-right h3 {
+    margin-top: 1em;
+    margin-bottom: 0.3em;
+}
+
+.resume-right p {
+    margin: 0 0 0.8em;
+    line-height: 1.5;
+}
+
+/* Dark Mode Color Integration (example, if you have vars) */
+body.dark-mode .resume-divider {
+    background-color: #ddd;
 }
 
 /* Footer Styling */
