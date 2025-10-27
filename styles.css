@@ -107,8 +107,9 @@ html {
     --mid-color: #a4aaaa;
     --opposite-color: #f6f6f6;
 
-    --link-color: #b6b6b6;
+    --link-color: #eaeaea;
     --link-hover: #ffffff;
+    --visited-link-color: #b6b6b6; 
 
     --text-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.75);
 
@@ -117,7 +118,7 @@ html {
     --theme-toggle-hover: #888888;
 
     --separator-color: rgba(255, 255, 255, 0.3); /* Dark mode separator */
-    --visited-link-color: #eaeaea;
+
 
     --current: #f2f2f2;
     --button-color: #191919;
@@ -234,7 +235,7 @@ main {
         left: auto;
         width: 100%;
         padding: 1.5em;
-        background-color: var(--dark-bg, #111);
+        background-color: var(--bg-color);
         box-sizing: border-box;
     }
 
@@ -422,6 +423,7 @@ img#profile-pic {
 }
 
 h1#main-title {
+    text-align:center;
     text-shadow: 3px 3px 2px var(--text-shadow);
     font-size: 2.4em;
     padding-top: 0.5em;
@@ -998,8 +1000,8 @@ h2.resume-name-title {
 .resume-left {
     width: 25%;
     padding: 40px 20px;
-    background-color: var(--dark-bg, #111);
-    color: var(--light-text, #eee);
+    background-color: var(--bg-color);
+    color: var(--text-color);
     box-sizing: border-box;
     position: fixed;
     top: 0;
@@ -1024,6 +1026,30 @@ h2.resume-name-title {
     margin-bottom: 0.4em;
 }
 
+.resume-left p img.email {
+  display: inline-block;
+    width:1em;
+    margin-right:1.1em;
+    vertical-align: -0.1em;
+}
+
+.resume-left p img.location {
+  display: inline-block;
+    width:.87em;
+    height:1.13em;
+    margin-right:.9em;
+    margin-left: .1em;
+    vertical-align: -0.3em;
+}
+
+.resume-left p img.github {
+  display: inline-block;
+    size:10%;
+    height:1.13em;
+    margin-right:0.7em;
+    vertical-align: -0.2em;
+}
+
 /* Divider Line */
 .resume-divider {
     position: fixed;
@@ -1031,7 +1057,7 @@ h2.resume-name-title {
     top: 0;
     width: 2px;
     height: 100%;
-    background-color: white;
+    background-color: var(--opposite-color);
     opacity: 0.6;
     z-index: 10;
 }
@@ -1040,25 +1066,55 @@ h2.resume-name-title {
 .resume-right {
     width: 85%;
     margin-left: 25%;
-    padding: 40px 60px;
+
+    padding: 1.5em 2.5em;
     box-sizing: border-box;
     overflow-y: auto;
 }
 
 .resume-right h2 {
-    margin-top: 0;
+    margin-top: 1em;
     border-bottom: 2px solid #666;
     padding-bottom: 0.3em;
 }
 
 .resume-right h3 {
+    margin-top: 1.2em;
+    margin-bottom: 0.15em;
+}
+
+.resume-right h4 {
     margin-top: 1em;
-    margin-bottom: 0.3em;
+    margin-bottom: 0;
+}
+
+.resume-right ul {
+    padding-top:0;
+    margin-top:0;
+}
+
+.resume-right li {
+    margin-left: 2.5em;
 }
 
 .resume-right p {
-    margin: 0 0 0.8em;
-    line-height: 1.5;
+    padding-top:0.2em;
+    padding: 0.5em;
+}
+
+.resume-right div.resume-example {
+    font-size: clamp(0.8rem, 1.2vw, 1rem);
+    padding-left: 4.4em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em 1em; /* row-gap, column-gap */
+    align-items: flex-start;
+}
+
+.resume-right div.resume-example a {
+    font-size: clamp(0.8rem, 1.2vw, 1rem); /* auto-resize with screen width */
+    text-decoration: none;
+    white-space: nowrap;
 }
 
 /* Dark Mode Color Integration (example, if you have vars) */

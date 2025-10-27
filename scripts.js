@@ -49,6 +49,11 @@ function themeToggle() {
                 if (scrollButton) {
                     scrollButton.style.backgroundImage = "url('assets/svg/up-arrow-black.svg')";
                 }
+
+                // Swap img srcs to light mode
+                document.querySelectorAll("img.email, img.location, img.github").forEach((img) => {
+                    img.src = img.src.replace("-dark", "-light");
+                });
             } else {
                 sunIcon.style.display = "block";
                 moonIcon.style.display = "none";
@@ -56,6 +61,11 @@ function themeToggle() {
                 if (scrollButton) {
                     scrollButton.style.backgroundImage = "url('assets/svg/up-arrow-white.svg')";
                 }
+
+                // Swap img srcs to dark mode
+                document.querySelectorAll("img.email, img.location, img.github").forEach((img) => {
+                    img.src = img.src.replace("-light", "-dark");
+                });
             }
         }
     });

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   fill="#000000"
+   width="800"
+   height="640"
+   viewBox="0 0 24 19.2"
+   version="1.1"
+   id="svg2"
+   sodipodi:docname="email-light_mode.svg"
+   inkscape:export-filename="..\icons\email-light_mode.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="namedview2"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showguides="true">
+    <sodipodi:guide
+       position="0,24.851436"
+       orientation="1,0"
+       id="guide2"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="24,22.072507"
+       orientation="1,0"
+       id="guide3"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <g
+     data-name="Layer 2"
+     id="g2"
+     transform="translate(0,-2.4000001)">
+    <path
+       d="M 20.4,2.4 H 3.6 C 1.6117749,2.4 0,4.0117749 0,6 v 12 c 0,1.988225 1.6117749,3.6 3.6,3.6 H 20.4 C 22.388225,21.6 24,19.988225 24,18 V 6 C 24,4.0117749 22.388225,2.4 20.4,2.4 Z M 19.596,4.8 12,10.5 4.404,4.8 Z M 20.4,19.2 H 3.6 C 2.9372583,19.2 2.4,18.662742 2.4,18 V 6.3 l 8.88,6.66 c 0.207715,0.155787 0.460356,0.24 0.72,0.24 0.259644,0 0.512285,-0.08421 0.72,-0.24 L 21.6,6.3 V 18 c 0,0.662742 -0.537258,1.2 -1.2,1.2 z"
+       id="path1"
+       style="stroke-width:1"
+       sodipodi:nodetypes="sssssssssccccssscssscss" />
+  </g>
+</svg>
