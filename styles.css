@@ -109,7 +109,7 @@ html {
 
     --link-color: #eaeaea;
     --link-hover: #ffffff;
-    --visited-link-color: #b6b6b6; 
+    --visited-link-color: #b6b6b6;
 
     --text-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.75);
 
@@ -118,7 +118,6 @@ html {
     --theme-toggle-hover: #888888;
 
     --separator-color: rgba(255, 255, 255, 0.3); /* Dark mode separator */
-
 
     --current: #f2f2f2;
     --button-color: #191919;
@@ -169,9 +168,10 @@ a:hover {
 
 html,
 body {
+    height: 100%;
     margin: 0;
-    height: auto;
-    display: block; /* Remove flex here */
+    display: flex;
+    flex-direction: column;
 }
 
 body {
@@ -197,7 +197,7 @@ main {
     }
 
     nav {
-        max-width: 0vw;
+        max-width: 20vw; /* This should do something but it doesn't. Doesn't need to though.*/
     }
 
     main {
@@ -207,6 +207,12 @@ main {
     nav,
     main {
         margin: 0 auto; /* Center them */
+    }
+
+    /* Adjust width of content to 50% but only for Home, Posts, and on large screens. */
+    main.index-main,
+    main.posts-main {
+        width: 50%;
     }
 }
 
@@ -423,7 +429,7 @@ img#profile-pic {
 }
 
 h1#main-title {
-    text-align:center;
+    text-align: center;
     text-shadow: 3px 3px 2px var(--text-shadow);
     font-size: 2.4em;
     padding-top: 0.5em;
@@ -1027,26 +1033,26 @@ h2.resume-name-title {
 }
 
 .resume-left p img.email {
-  display: inline-block;
-    width:1em;
-    margin-right:1.1em;
+    display: inline-block;
+    width: 1em;
+    margin-right: 1.1em;
     vertical-align: -0.1em;
 }
 
 .resume-left p img.location {
-  display: inline-block;
-    width:.87em;
-    height:1.13em;
-    margin-right:.9em;
-    margin-left: .1em;
+    display: inline-block;
+    width: 0.87em;
+    height: 1.13em;
+    margin-right: 0.9em;
+    margin-left: 0.1em;
     vertical-align: -0.3em;
 }
 
 .resume-left p img.github {
-  display: inline-block;
-    size:10%;
-    height:1.13em;
-    margin-right:0.7em;
+    display: inline-block;
+    size: 10%;
+    height: 1.13em;
+    margin-right: 0.7em;
     vertical-align: -0.2em;
 }
 
@@ -1089,8 +1095,8 @@ h2.resume-name-title {
 }
 
 .resume-right ul {
-    padding-top:0;
-    margin-top:0;
+    padding-top: 0;
+    margin-top: 0;
 }
 
 .resume-right li {
@@ -1098,7 +1104,7 @@ h2.resume-name-title {
 }
 
 .resume-right p {
-    padding-top:0.2em;
+    padding-top: 0.2em;
     padding: 0.5em;
 }
 
