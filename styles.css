@@ -210,8 +210,8 @@ main {
     }
 
     /* Adjust width of content to 50% but only for Home, Posts, and on large screens. */
-    main.index-main,
-    main.posts-main {
+    body main.index-main,
+    body main.posts-main {
         width: 50%;
     }
 }
