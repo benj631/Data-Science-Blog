@@ -98,7 +98,8 @@ html {
 }
 
 .resume-right div.resume-example .open_in_new_tab_icon,
-.resume-right ul li .open_in_new_tab_icon {
+.resume-right ul li .open_in_new_tab_icon,
+a span.open_in_new_tab_icon {
     content: url("assets/icons/open_in_new_tab_light.png");
 }
 
@@ -132,7 +133,8 @@ html {
     --border-highlight-color: #ffffff;
 
     .resume-right div.resume-example .open_in_new_tab_icon,
-    .resume-right ul li .open_in_new_tab_icon {
+    .resume-right ul li .open_in_new_tab_icon,
+    a span.open_in_new_tab_icon {
         content: url("assets/icons/open_in_new_tab_dark.png");
     }
 }
@@ -1135,17 +1137,19 @@ h2.resume-name-title {
 
 .resume-right div.resume-example a .open_in_new_tab_icon {
     display: inline-block;
-    height: 1.1em; /* adjust size */
-    width: 1.1em; /* make square */
-    margin-right: 0.5em; /* spacing from text */
+    height: 1em;
+    width: 1em;
+    margin-right: 0.4em; /* spacing from text */
     vertical-align: middle; /* align with text */
     background-repeat: no-repeat;
 }
 
-.resume-right ul li .open_in_new_tab_icon {
+/* This needs to go somewhere else and this functionality should be universal !!!*/
+a .open_in_new_tab_icon {
     display: inline-block;
-    width: 0.9em; /* make square */
-    margin-right: 0.5em; /* spacing from text */
+    height: 1em; /* adjust size */
+    width: 1em; /* make square */
+    margin-right: 0.4em; /* spacing from text */
     vertical-align: middle; /* align with text */
     background-repeat: no-repeat;
 }

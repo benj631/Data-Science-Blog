@@ -1,0 +1,14 @@
+To do:
+
+Fix microspacing on link
+Fix link coloring
+- Top of page links should not change color at all
+- Clear styling for all links
+
+Link Behavior:
+- Default behavior should be new tab, in site should be in site.
+
+link color shifting should be within @media rules for theming
+
+
+- Add file for idaho counties
