@@ -97,12 +97,6 @@ html {
     --border-highlight-color: #000000;
 }
 
-.resume-right div.resume-example .open_in_new_tab_icon,
-.resume-right ul li .open_in_new_tab_icon,
-a span.open_in_new_tab_icon {
-    content: url("assets/icons/open_in_new_tab_light.png");
-}
-
 /* Dark Mode */
 
 .dark-mode {
@@ -131,12 +125,26 @@ a span.open_in_new_tab_icon {
     --highlighted-text: #2c8ba8;
 
     --border-highlight-color: #ffffff;
+}
 
-    .resume-right div.resume-example .open_in_new_tab_icon,
-    .resume-right ul li .open_in_new_tab_icon,
-    a span.open_in_new_tab_icon {
-        content: url("assets/icons/open_in_new_tab_dark.png");
-    }
+.light-mode .resume-right div.resume-example .open_in_new_tab_icon,
+.light-mode .resume-right ul li .open_in_new_tab_icon,
+.light-mode a span.open_in_new_tab_icon {
+    content: url("assets/icons/open_in_new_tab_light.png");
+}
+
+.light-mode .linked_in {
+    content: url(assets/icons/linked_in_light.png);
+}
+
+.dark-mode .resume-right div.resume-example .open_in_new_tab_icon,
+.dark-mode .resume-right ul li .open_in_new_tab_icon,
+.dark-mode a span.open_in_new_tab_icon {
+    content: url("assets/icons/open_in_new_tab_dark.png");
+}
+
+.dark-mode .linked_in {
+    content: url(assets/icons/linked_in_dark.png);
 }
 
 /* Adjust Default Link Styling */
@@ -1058,7 +1066,7 @@ h2.resume-name-title {
     display: inline-block;
     width: 0.87em;
     height: 1.13em;
-    margin-right: 0.9em;
+    margin-right: 1.1em;
     margin-left: 0.1em;
     vertical-align: -0.3em;
 }
@@ -1152,6 +1160,13 @@ a .open_in_new_tab_icon {
     margin-right: 0.4em; /* spacing from text */
     vertical-align: middle; /* align with text */
     background-repeat: no-repeat;
+}
+
+.linked_in {
+    display: inline-block;
+    height: 1.13em;
+    margin-right: 0.7em;
+    vertical-align: -0.3em;
 }
 
 /* Dark Mode Color Integration (example, if you have vars) */

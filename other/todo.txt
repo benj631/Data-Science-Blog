@@ -10,5 +10,6 @@ Link Behavior:
 
 link color shifting should be within @media rules for theming
 
-
 - Add file for idaho counties
+
+Add Linked in and logo to resume
