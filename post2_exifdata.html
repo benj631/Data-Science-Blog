@@ -73,12 +73,19 @@
 
       <p>
         I initially started photography with Canon cameras and lenses, and have used the Canon EOS R8, which uses
-        Canon's native RF lens mount. My most used lens throughout the past several years was the the RF 24-105 F4L.
+        Canon's native RF lens mount. My most used lens throughout the past several years was the the
+        <a href="https://www.usa.canon.com/shop/p/rf24-105mm-f4-l-is-usm" target="_blank"
+          ><span class="open_in_new_tab_icon"></span>RF 24-105 F4 L IS USM.</a
+        >
         This lens has great sharpness and allowed me to get both wide-angled and zoomed-in pictures in a wide variety of
-        circumstances. In September of 2024, Canon released the RF 28-70 F2.8. This lens, although it had a smalller
-        zoom range compared to the 24-105 f4L, is able to perform better slightly better in low-light situations and
-        offers more subject separation, causing the background to blur out more, offering potentially better background
-        blur and subject isolation- Both of these are desireable as a photographer.
+        circumstances. In September of 2024, Canon released the
+        <a href="https://www.usa.canon.com/shop/p/rf28-70mm-f2-8-is-stm" target="_blank"
+          ><span class="open_in_new_tab_icon"></span>RF 28-70 IS STM.</a
+        >
+        This lens, although it had a smalller zoom range compared to the 24-105 f4L, is able to perform better slightly
+        better in low-light situations and offers more subject separation, causing the background to blur out more,
+        offering potentially better background blur and subject isolation. It also was smaller and lighter. All of these
+        characteristics are desireable as a photographer.
       </p>
 
       <p>
@@ -100,6 +107,28 @@
         show. Let's take a look at the data. I'll show you my reasoning, explain my situation, and walk you through my
         experience with the lenses.
       </p>
+
+      <h2>Conditions for the Trade</h2>
+      <p>
+        Before wrangling the data, there were some expectations for what conditions would warrant selling the lens. Here
+        are some of those conditions:
+      </p>
+
+      <ul>
+        <li>
+          If there were significantly fewer pictures and videos at the 24-27 and 70-105 focal lengths than the focal
+          lengths the new lens could cover.
+        </li>
+        <li>
+          If there were a lot of pictures and videos around slower shutter speeds (~30-120fps) and higher ISOs (4500+).
+          This would indicate that an extra stop of light could have made the difference in the situation between usable
+          and unusable footage.
+        </li>
+        <li>If I would prefer the smaller and lighter form factor of the newer lens.</li>
+        <li>If the image quality and background rendering of the new lens were similar or better than the F4L.</li>
+      </ul>
+
+      <p>In the analysis, we will figure out of which of these conditions are met.</p>
 
       <h2>Extraction</h2>
 
@@ -223,20 +252,6 @@
         This next piece of code filters out large file sizes and videos. It's helpful for one chart which we will see
         shortly, but otherwise I didn't run it for the output of the other graphs that you'll see.
       </p>
-      <p>
-        Initially, I filtered out videos and large files using this next chunk, but in hindsight I'm not really sure why
-        I did this- I wanted to focus on video as much if not more than photo, so filtering out videos could have
-        potentially skewed my findings. Comparing video + picture to picture only, my findings in all charts looked
-        nearly identical. So, in the long run it didn't make a difference but it had the potential to. For this reason
-        I'm going to show the mixed graphs, but it's worth noting that this could have potentially caused more skewed
-        conclusions.
-      </p>
-      <p>
-        I initially wasn't going to include this, but I chose to because truthfully we all make mistakes, but what
-        matters is learning from them so we don't make them in the future, and sometimes code can be included and ran
-        without us knowing why it was put there in the first place.
-      </p>
-
       <pre
         class="code"
         data-lang="R"><button class="copy-button" aria-label="Copy to clipboard">📋</button><code class="block"><script type="text/plain">
@@ -286,7 +301,10 @@
       <div id="tab1" class="tab-content tab-content-active">
         <h3>File Sizes</h3>
 
-        <p>Let's take a look at file sizes:</p>
+        <p>
+          Let's take a look at file sizes. I wouldn't normally expect to find anything in the file sizes but we'll take
+          a look anyways:
+        </p>
 
         <iframe
           title="File Size Percent Density"
@@ -296,10 +314,9 @@
         <p class="plot-above plot-below">
           The massive spike we see on the left is all the pictures, and everything to the right is essentially videos,
           except for the 1 or 2 90MB RAW picture files I found (-I still don't know why they took up that much data).
-          This is where that code chunk earlier came in handy. We can use it to just look at the files sizes of the
-          pictures:
+          The massive difference in file size between videos and pictures is interesting though.
         </p>
-
+        <p>The code:</p>
         <pre
           class="code"
           data-lang="R"><button class="copy-button" aria-label="Copy to clipboard">📋</button><code class="block"><script type="text/plain">
@@ -313,14 +330,24 @@
       </div>
 
       <div id="tab2" class="tab-content">
+        <p>Let's filter down to just pictures and wee what we get:</p>
+
         <iframe
           title="File Size Percent Density 2"
           src="post2-assets/File_Size_Percent_Density2.html"
           class="plot-frame"></iframe>
+
+        <p>
+          We can see a bimodal distribution here. The first spike is JPG files at around 3.34 MB, while the second spike
+          around 9.4 is Canon Raw format. To check the number of files earlier, I took out JPG duplicates, as I usually
+          take both RAW and JPG images.
+        </p>
       </div>
 
       <div id="tab3" class="tab-content">
-        <iframe title="Focal Length Binned" src="post2-assets/Focal_Length_Binned.html" class="plot-frame"></iframe>
+        <div class="iframe-container">
+          <iframe title="Focal Length Binned" src="post2-assets/Focal_Length_Binned.html" class="plot-frame"></iframe>
+        </div>
 
         <pre
           class="code"
@@ -506,14 +533,25 @@
         </script></code></pre>
       </div>
 
-      <h2></h2>
+      <h2>Analysis Conclusions</h2>
+      <h2>What Happened?</h2>
+
+      <p></p>
       <p>
         There were several assumptions I had made when choosing the 28-70. I had assumed that the lens would be the same
-        sharpness. In my testing, it seemed it wasn't as sharp. Various tests online showed that the 28-70 2.8 had
-        inconsistencies in manufacturing quality that made some lenses less sharp than others. Although I didn't have
-        access to high quality tools for testing, or other lenses for comparison, I had a gut feeling that the len
-        wasn't as sharp as it could be, or as online tests had shown.
+        sharpness as both advertised, and the F4L. In my testing, it seemed it wasn't as sharp. Various online tests
+        done by other photographers showed that the 28-70 2.8 had inconsistencies in manufacturing quality that made
+        some lenses less sharp than others. Although I didn't have access to high quality tools for testing, or other
+        lenses for comparison, I had a gut feeling that the len wasn't as sharp as it could be, or as online tests had
+        shown.
       </p>
+      <p>
+        Alongside that, was the background rendering. To me, the 28-70 had a very 'busy' background blur that to me was
+        distracting and unpleasant. While I did like the form factor change, the loss in lens quality and undesirable
+        rendering to me was a deal breaker. <b> The extra stop of light was not worth the tradeoffs in my opinion.</b> I
+        had expected
+      </p>
+
       <p>
         Size, zoom range problems. 2.8 not that big of a difference. Bokeh quality more important than separation, and
         2.8 was 'busy.' Which meant both 'lively' and 'distracting'. I took out bigger file sizes to just focus on
