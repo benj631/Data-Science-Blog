@@ -77,8 +77,9 @@ html {
     --mid-color: #9ea2a6;
     --opposite-color: #000000;
 
-    --link-color: #3d4141;
-    --link-hover: #0d122b;
+    --link-color: #353535;
+    --visited-link-color: #747474;
+    --link-hover: #000000;
 
     --text-shadow: 0.05em 0.05em 0.1em rgba(256, 256, 256, 0.75);
 
@@ -87,10 +88,10 @@ html {
     --theme-toggle-hover: #dddddd;
 
     --separator-color: rgba(0, 0, 0, 0.3); /* Light mode separator */
-    --visited-link-color: #0d122b;
 
     --current: #000000;
-    --button-color: #f4f4f4;
+    --button-color: rgba(255, 255, 255, 0.7);
+    --button-color-hover: rgba(149, 149, 149, 0.5);
 
     --highlighted-text: #ffcf33;
 
@@ -107,9 +108,9 @@ html {
     --mid-color: #a4aaaa;
     --opposite-color: #f6f6f6;
 
-    --link-color: #eaeaea;
+    --link-color: #c9c9c9;
     --link-hover: #ffffff;
-    --visited-link-color: #b6b6b6;
+    --visited-link-color: #4a4a4a;
 
     --text-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.75);
 
@@ -120,7 +121,8 @@ html {
     --separator-color: rgba(255, 255, 255, 0.3); /* Dark mode separator */
 
     --current: #f2f2f2;
-    --button-color: #191919;
+    --button-color: rgba(0, 0, 0, 0.5);
+    --button-color-hover: rgba(173, 173, 173, 0.5);
 
     --highlighted-text: #2c8ba8;
 
@@ -149,37 +151,157 @@ html {
 
 /* Adjust Default Link Styling */
 
-a {
-    text-decoration: none; /* Removes underline */
-    position: relative; /* Needed for the pseudo-element */
-    color: var(--link-color); /* Use  theme variable */
+:root {
+    --underline-thickness: 2px;
+    --underline-offset: 2px;
+    --dur: 0.35s;
+    --ease: cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 
+a {
+    position: relative;
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color var(--dur) var(--ease);
+}
+
+/* Base underline (always visible) */
+a::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(-1 * var(--underline-offset));
+    height: var(--underline-thickness);
+    background: var(--link-color);
+    pointer-events: none;
+    z-index: 0;
+    transform: scaleX(0); /* hidden by default */
+    transform-origin: left center;
+    transition: transform var(--dur) var(--ease);
+}
+
+/* Overlay underline that sweeps */
 a::after {
     content: "";
     position: absolute;
-    bottom: -1px; /* Position the line at the bottom of the text */
     left: 0;
-    width: 0%; /* Start with no width */
-    height: 1px; /* Line thickness */
-    background-color: var(--link-color); /* Choose underline color */
-    transition: width 0.2s ease-in-out; /* Animate width */
+    bottom: calc(-1 * var(--underline-offset));
+    width: 100%;
+    height: var(--underline-thickness);
+    background: var(--link-hover);
+    transform-origin: left center;
+    transform: scaleX(0);
+    transition: transform var(--dur) var(--ease);
+    pointer-events: none;
+    z-index: 1;
+    will-change: transform;
 }
 
-a:hover::after {
-    width: 100%; /* Expand the underline */
+/* Hover: text color + sweep in */
+a:hover,
+a:focus {
+    color: var(--link-hover);
 }
 
+/* Sweep left → right */
+a:hover::after,
+a:focus::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+}
+
+/* Sweep right → left on unhover */
+a:not(:hover)::after {
+    transform-origin: right center;
+    transform: scaleX(0);
+}
+
+a.underline-by-default::before {
+    transform: scaleX(1); /* always visible */
+    transform-origin: left center;
+}
+
+/* Optional: visited color for default underline links */
+a.underline-by-default:visited::before {
+    background: var(--visited-link-color);
+}
+
+/* Keep visited color logic consistent */
 a:visited {
-    color: var(--visited-link-color); /* Custom visited link color */
+    /* This needs fixing */
 }
 
-a:hover {
-    color: var(--link-hover); /* Change color on hover */
-    text-decoration: none; /* Optional: add underline on hover */
-    transition: 0.4s ease;
+a:visited::before {
+    background: var(--visited-link-color);
 }
 
+/* Same Shenanigans for nav links*/
+
+nav .nav-links-div a {
+    position: relative;
+    color: var(--link-color);
+    text-decoration: none; /* remove default underline */
+    transition: color var(--dur) var(--ease);
+}
+
+/* Base underline: hidden initially */
+nav .nav-links-div a::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(-1 * var(--underline-offset));
+    height: var(--underline-thickness);
+    background: var(--link-color);
+    pointer-events: none;
+    z-index: 0;
+    transform: scaleX(0); /* hide by default */
+    transform-origin: left center;
+    transition: transform var(--dur) var(--ease);
+}
+
+/* Overlay underline: hidden initially */
+nav .nav-links-div a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: calc(-1 * var(--underline-offset));
+    width: 100%;
+    height: var(--underline-thickness);
+    background: var(--link-hover);
+    transform-origin: left center;
+    transform: scaleX(0); /* hide by default */
+    transition: transform var(--dur) var(--ease);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Hover: show underline sweep and change color */
+nav .nav-links-div a:hover,
+nav .nav-links-div a:focus {
+    color: var(--link-hover);
+}
+
+nav .nav-links-div a:hover::before,
+nav .nav-links-div a:focus::before {
+    transform: scaleX(1);
+}
+
+nav .nav-links-div a:hover::after,
+nav .nav-links-div a:focus::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+}
+
+/* Optional: sweep back when unhovering */
+nav .nav-links-div a:not(:hover)::before,
+nav .nav-links-div a:not(:hover)::after {
+    transform-origin: right center;
+    transform: scaleX(0);
+}
+
+/* Text Selection Highlight */
 ::selection {
     background-color: var(--highlighted-text); /* Change the background color of selected text */
 }
@@ -265,7 +387,7 @@ main {
         padding: 1.5em;
         background-color: var(--bg-color);
         box-sizing: border-box;
-        z-index: -1; /* Fixes sun/moon icon on small screens from hiding under */
+        z-index: -1; /* Fixes sun/moon icon on small screens from hiding under certain flex content */
     }
 
     /* Divider: switch from vertical to horizontal */
@@ -565,8 +687,8 @@ button:focus {
 }
 
 #toggle-toc {
-    background-color: var(--button-color); /* Set default button color */
     color: var(--button-text-color); /* Set text color */
+    background-color: var(--button-color);
     border: none;
     padding: 10px 15px;
     font-size: 1em;
@@ -581,7 +703,7 @@ button:focus {
 }
 
 #toggle-toc:hover {
-    background-color: var(--button-color); /* Darken button on hover */
+    background-color: var(--button-color-hover); /* Darken button on hover */
     animation: shiftRightBack 0.25s forwards;
     /* transform: scale(1.05);  Slightly increase size for hover effect */
 }
@@ -615,11 +737,11 @@ button:focus {
 }
 
 #table-of-contents {
-    width: 100%;
-    margin: 0.5em 0;
+    margin-left: 0;
+    padding: 0.5em 1.5em 0.5em 1.5em;
     display: none;
-    background-color: var(--bg-color-alt1);
     border-radius: 0.8em;
+    border: 1px solid var(--opposite-color);
 }
 
 #table-of-contents ul {

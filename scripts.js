@@ -330,6 +330,45 @@ function enableImageViewer() {
     });
 }
 
+function generateTableOfContents() {
+    const tocList = document.querySelector("#table-of-contents ul");
+    if (!tocList) return;
+
+    // Clear existing TOC items
+    tocList.innerHTML = "";
+
+    const main = document.querySelector("main");
+    if (!main) return;
+
+    const headers = main.querySelectorAll("h2, h3, h4, h5, h6");
+
+    headers.forEach((header) => {
+        const text = header.textContent.trim();
+        if (!text || text === "Table of Contents") return;
+
+        // Assign an ID matching the header text (cleaned for URL)
+        if (!header.id) {
+            header.id = text
+                .toLowerCase()
+                .replace(/[^\w\s-]/g, "") // remove special chars
+                .replace(/\s+/g, "-"); // replace spaces with hyphens
+        }
+
+        // Create the TOC link
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = `#${header.id}`;
+        a.textContent = text;
+
+        li.appendChild(a);
+
+        // Indent based on header level (h2 = 0, h3 = 1em, etc.)
+        li.style.marginLeft = `${parseInt(header.tagName.substring(1)) - 2}em`;
+
+        tocList.appendChild(li);
+    });
+}
+
 function main() {
     setupScrollFadeGradient();
     themeToggle();
@@ -345,6 +384,8 @@ function main() {
     setupCopyButtons();
     initializeTabs();
     enableImageViewer();
+
+    generateTableOfContents();
 }
 
 main();
