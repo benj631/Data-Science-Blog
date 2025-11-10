@@ -929,6 +929,10 @@ main ul li ul li:before {
     display: block;
 }
 
+p.smaller {
+    font-size:small;
+}
+
 /* PLotly */
 iframe.plot-frame {
     margin-left: auto;
@@ -1210,6 +1214,10 @@ h2.resume-name-title {
     height: 1.13em;
     margin-right: 0.7em;
     vertical-align: -0.2em;
+}
+
+.resume-left p.smaller{
+    padding-left:.5em;
 }
 
 /* Divider Line */
